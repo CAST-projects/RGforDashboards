@@ -25,9 +25,6 @@ namespace CastReporting.Mediation.Interfaces
     public interface ICastProxy: IDisposable
     {
         CookieContainer GetCookieContainer();
-
-        void RemoveAuthenticationHeaders(bool apiKey);
-
         /// <summary>
         /// 
         /// </summary>

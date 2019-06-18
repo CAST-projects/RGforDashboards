@@ -119,7 +119,7 @@ namespace CastReporting.BLL
                 else
                 {
                     WSConnection existing = setting.WSConnections?.Where(x => x.Equals(connection)).FirstOrDefault();
-                    if (existing?.Login == connection.Login && existing?.Password == connection.Password && existing?.ApiKey == connection.ApiKey)
+                    if (existing?.Login == connection.Login && existing?.Password == connection.Password)
                     {
                         // ReSharper disable once RedundantAssignment
                         state = StatesEnum.ConnectionAlreadyExist;

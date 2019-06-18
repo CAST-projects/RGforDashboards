@@ -37,13 +37,7 @@ namespace CastReporting.Console.Argument
         /// </summary>
         [XmlElement("password")]
         public XmlTagName Password { get; set; }
-
-        /// <summary>
-        /// API Key
-        /// </summary>
-        [XmlElement("apikey")]
-        public XmlTagName ApiKey { get; set; }
-
+        
         /// <summary>
         /// Application
         /// </summary>

@@ -52,7 +52,7 @@ namespace CastReporting.BLL
         /// <returns></returns>
         public static bool CheckService(WSConnection connection)
         {
-            using (var castRepsitory = GetRepository(connection, true))
+            using (var castRepsitory = GetRepository(connection))
             {
                 return castRepsitory.IsServiceValid();
             }

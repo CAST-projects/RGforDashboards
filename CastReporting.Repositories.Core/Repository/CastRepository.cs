@@ -69,7 +69,7 @@ namespace CastReporting.Repositories
         private const string _query_component_type = "{0}/components/{1}/snapshots/{2}";
         private const string _query_quality_standards_evolution = "{0}/results?quality-standards=(c:{1})&select=(evolutionSummary)";
         private const string _query_quality_standards_information = "{0}/quality-standards";
-        private const string _query_removed_violations_by_bcid = "{0}/removed-violations?";
+        private const string _query_removed_violations_by_bcid = "{0}/removed-violations?rule-pattern=(cc:{1},nc:{1})&nbRows={2}";
         private const string _query_delta_components = "{0}/components/65005?snapshot-ids=({1},{2})&status={3}";
 
         #endregion CONSTANTS
@@ -97,10 +97,6 @@ namespace CastReporting.Repositories
                 return _CurrentConnection;
             }           
         }
-
-        protected bool _CurrentApiKey;
-        public bool CurrentApiKey => _CurrentApiKey;
-
         #endregion PROPERTIES
 
         #region CONSTRUCTORS
@@ -112,10 +108,9 @@ namespace CastReporting.Repositories
         /// <param name="client"></param>
         public CastRepository(WSConnection connection, ICastProxy client)
         {
-            _Client = new CastProxy(connection.Login, connection.Password, connection.ApiKey, client?.GetCookieContainer());
+            _Client = new CastProxy(connection.Login, connection.Password, client?.GetCookieContainer());
             
             _CurrentConnection = connection.Url;
-            _CurrentApiKey = connection.ApiKey;
         }
 
         public ICastProxy GetClient()
@@ -430,24 +425,11 @@ namespace CastReporting.Repositories
             return CallWS<IEnumerable<Result>>(requestUrl, RequestComplexity.Standard);
         }
 
-        public IEnumerable<Violation> GetRemovedViolations(string snapshotHRef, string businessCriteria, int count, string criticity)
+        public IEnumerable<Violation> GetRemovedViolations(string snapshotHRef, string businessCriteria, int count)
         {
-            string query = _query_removed_violations_by_bcid;
-            if (criticity == null || criticity.Equals(string.Empty)) criticity = "all";
-            switch (criticity)
-        {
-                case "c":
-                    query += "rule-pattern=(cc:{1})";
-                    break;
-                case "nc":
-                    query += "rule-pattern=(nc:{1})";
-                    break;
-                default:
-                    query += "rule-pattern=(cc:{1},nc:{1})";
-                    break;
-             }
-            query += count == -1 ?"&nbRows=$all" : $"&nbRows={count}";
-            var requestUrl = string.Format(query, snapshotHRef, businessCriteria);
+            var requestUrl = (count != -1) ? string.Format(_query_removed_violations_by_bcid, snapshotHRef, businessCriteria, count)
+                : string.Format(_query_removed_violations_by_bcid, snapshotHRef, businessCriteria, "$all");
+
             return CallWS<IEnumerable<Violation>>(requestUrl, RequestComplexity.Long);
         }
 
@@ -718,10 +700,6 @@ namespace CastReporting.Repositories
 
             try
             {
-                if (_Client.GetCookieContainer().Count > 0)
-                {
-                    _Client.RemoveAuthenticationHeaders(CurrentApiKey);
-                }
                 var jsonString = _Client.DownloadString(requestUrl, pComplexity);
 
                 var serializer = new DataContractJsonSerializer(typeof(T));
@@ -752,10 +730,6 @@ namespace CastReporting.Repositories
             var jsonString = string.Empty;
             try
             {
-                if (_Client.GetCookieContainer().Count > 0)
-                {
-                    _Client.RemoveAuthenticationHeaders(CurrentApiKey);
-                }
                 jsonString = _Client.DownloadString(requestUrl, pComplexity);
             }
             catch (WebException e)
@@ -783,10 +757,6 @@ namespace CastReporting.Repositories
 
             try
             {
-                if (_Client.GetCookieContainer().Count > 0)
-                {
-                    _Client.RemoveAuthenticationHeaders(CurrentApiKey);
-                }
                 var csvString = _Client.DownloadCsvString(requestUrl, pComplexity);
                 var serializer = new CsvSerializer<T>();
                 return serializer.ReadObjects(csvString, count, PropNames);
@@ -807,10 +777,6 @@ namespace CastReporting.Repositories
 
             try
             {
-                if (_Client.GetCookieContainer().Count > 0)
-                {
-                    _Client.RemoveAuthenticationHeaders(CurrentApiKey);
-                }
                 return _Client.DownloadPlainText(requestUrl, pComplexity);
             }
             catch (WebException e)

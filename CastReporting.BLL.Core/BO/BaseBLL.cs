@@ -40,9 +40,9 @@ namespace CastReporting.BLL
             return repo;
         }
 
-        protected static ICastRepsitory GetRepository(WSConnection connection, bool dropCookie=false)
+        protected static ICastRepsitory GetRepository(WSConnection connection)
         {
-            CastRepository repo = dropCookie ? new CastRepository(connection, null) : new CastRepository(connection, Client);
+            CastRepository repo = new CastRepository(connection, Client);
             Client = repo.GetClient();
             return repo;
         }
