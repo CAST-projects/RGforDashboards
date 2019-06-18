@@ -18,8 +18,6 @@ namespace CastReporting.Repositories.Interfaces
         /// <returns></returns>
         bool IsServiceValid();
 
-        string GetServerVersion();
-
         /// <summary>
         /// 
         /// </summary>

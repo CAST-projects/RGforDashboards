@@ -312,22 +312,19 @@ namespace CastReporting.UnitTest.Repositories
 
             TestUtility.SetCulture("zh-CN");
             ICastRepsitory ccontext = new CastRepository(_connection3, null);
-            if ("ABD".Equals(Environment.UserName))
+            if (Environment.UserName != "abd")
             {
-                const string cdomainHref = "AAD/quality-indicators/7126/snapshots/1";
-                var result = ccontext.GetConfBusinessCriteria(cdomainHref);
-                Assert.AreEqual("避免工件的已注释掉代码行/代码行的比率过高", result.Name);
-
-                TestUtility.SetCulture("en-US");
-                ICastRepsitory ccontext2 = new CastRepository(_connection3, null);
-                const string cdomainHref2 = "AAD/quality-indicators/7126/snapshots/1";
-                var result2 = ccontext2.GetConfBusinessCriteria(cdomainHref2);
-                Assert.AreEqual("Avoid Artifacts with high Commented-out Code Lines/Code Lines ratio", result2.Name);
-                return;
+                if (!ccontext.IsServiceValid()) return;
             }
+            const string cdomainHref = "AAD/quality-indicators/7126/snapshots/1";
+            var result = ccontext.GetConfBusinessCriteria(cdomainHref);
+            Assert.AreEqual("避免工件的已注释掉代码行/代码行的比率过高", result.Name);
 
-            bool valid = ccontext.IsServiceValid();
-            Assert.IsTrue(valid);
+            TestUtility.SetCulture("en-US");
+            ICastRepsitory ccontext2 = new CastRepository(_connection3, null);
+            const string cdomainHref2 = "AAD/quality-indicators/7126/snapshots/1";
+            var result2 = ccontext2.GetConfBusinessCriteria(cdomainHref2);
+            Assert.AreEqual("Avoid Artifacts with high Commented-out Code Lines/Code Lines ratio", result2.Name);
         }
 
     }

@@ -57,14 +57,5 @@ namespace CastReporting.BLL
                 return castRepsitory.IsServiceValid();
             }
         }
-
-        public static string GetServiceVersion(WSConnection connection)
-        {
-            using (var castRepsitory = GetRepository(connection))
-            {
-                return castRepsitory.GetServerVersion();
-            }
-        }
-
     }
 }

@@ -156,6 +156,5 @@ namespace CastReporting.Reporting.ReportingModel
             SnapshotExplorer?.Dispose();
         }
 
-        public string ServerVersion { get; set; }
     }
 }

@@ -43,7 +43,11 @@ namespace CastReporting.Reporting.Block.Table
 			});
 
             List<string> bcIdsStr = options.GetOption("BCID", "60017").Split('|').ToList();
-            List<int> bcIds = bcIdsStr.Select(int.Parse).ToList();
+            List<int> bcIds = new List<int>();
+            foreach (string _s in bcIdsStr)
+            {
+                bcIds.Add(int.Parse(_s));
+            }
 
             // to get decrease by default
             bool increase = options.GetOption("VARIATION", "DECREASE").ToLower().Equals("increase");
@@ -158,29 +162,16 @@ namespace CastReporting.Reporting.Block.Table
                     }
 
                     List<RuleViolationsVariationResultDTO> selected_elements = nbLimitTop != -1 ? variationRules.OrderByDescending(_ => _.Variation).Take(nbLimitTop).ToList() : variationRules.OrderByDescending(_ => _.Variation).ToList();
-                    if (selected_elements.Count <= 0)
+                    foreach (RuleViolationsVariationResultDTO varRule in selected_elements)
                     {
                         rowData.AddRange(new[]
-                        {
-                            Labels.NoItem,
-                            string.Empty,
-                            string.Empty
-                        });
-                        rowCount = 1;
-                    }
-                    else
-                    {
-                        foreach (RuleViolationsVariationResultDTO varRule in selected_elements)
-                        {
-                            rowData.AddRange(new[]
-                                {
-                                    varRule.Rule.CompoundedWeight.ToString(),
-                                    percent ? FormatPercent(varRule.Variation) : varRule.Variation.ToString(),
-                                    varRule.Rule.Name
-                                }
-                            );
-                            rowCount++;
-                        }
+                            {
+                                varRule.Rule.CompoundedWeight.ToString(),
+                                percent ? FormatPercent(varRule.Variation) : varRule.Variation.ToString(),
+                                varRule.Rule.Name
+                            }
+                        );
+                        rowCount++;
                     }
                 }
                 else

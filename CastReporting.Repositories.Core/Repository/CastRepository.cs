@@ -22,7 +22,6 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using Cast.Util.Log;
 using CastReporting.Domain;
-using CastReporting.Domain.Core.DataObject;
 using CastReporting.Mediation;
 using CastReporting.Mediation.Interfaces;
 using CastReporting.Repositories.Interfaces;
@@ -164,11 +163,7 @@ namespace CastReporting.Repositories
             return true;
         }
 
-        string ICastRepsitory.GetServerVersion()
-        {
-            Server res = CallWS<Server>("server", RequestComplexity.Standard);
-            return res?.Version;
-        }
+
 
         /// <summary>
         /// 

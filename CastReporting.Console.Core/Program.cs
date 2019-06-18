@@ -10,11 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
-using Microsoft.Office.Interop.PowerPoint;
-using Microsoft.Office.Interop.Word;
-using Application = CastReporting.Domain.Application;
 
 namespace CastReporting.Console
 {
@@ -273,7 +269,7 @@ namespace CastReporting.Console
                         {
 
                             //Create temporary report
-                            tmpReportFile = PathUtil.CreateTempCopy(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, "Portfolio", arguments.Template.Name));
+                            tmpReportFile = PathUtil.CreateTempCopy(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath + "\\Portfolio", arguments.Template.Name));
                             if (tmpReportFile.Contains(".xlsx"))
                             {
                                 tmpReportFileFlexi = PathUtil.CreateTempCopyFlexi(workDirectory, arguments.Template.Name);
@@ -282,7 +278,7 @@ namespace CastReporting.Console
                             ReportData reportData;
                             if (arguments.Category != null && arguments.Tag != null)
                             {
-                                reportData = new ReportData
+                                reportData = new ReportData()
                                 {
                                     FileName = tmpReportFile,
                                     Application = null,
@@ -290,19 +286,17 @@ namespace CastReporting.Console
                                     PreviousSnapshot = null,
                                     RuleExplorer = new RuleBLL(connection),
                                     CurrencySymbol = "$",
-                                    ServerVersion = CommonBLL.GetServiceVersion(connection),
                                     Applications = _n_selectedApps,
                                     Category = arguments.Category.Name,
                                     Tag = arguments.Tag.Name,
                                     Snapshots = _n_selectedApps_snapshots,
                                     IgnoresApplications = _appsToIgnorePortfolioResult,
-                                    IgnoresSnapshots = _snapsToIgnore,
-                                    Parameter = settings.ReportingParameter
+                                    IgnoresSnapshots = _snapsToIgnore
                                 };
                             }
                             else if (arguments.Category != null && arguments.Tag == null)
                             {
-                                reportData = new ReportData
+                                reportData = new ReportData()
                                 {
                                     FileName = tmpReportFile,
                                     Application = null,
@@ -310,7 +304,6 @@ namespace CastReporting.Console
                                     PreviousSnapshot = null,
                                     RuleExplorer = new RuleBLL(connection),
                                     CurrencySymbol = "$",
-                                    ServerVersion = CommonBLL.GetServiceVersion(connection),
                                     Applications = _n_selectedApps,
                                     Category = arguments.Category.Name,
                                     Tag = null,
@@ -322,7 +315,7 @@ namespace CastReporting.Console
                             }
                             else if (arguments.Category == null && arguments.Tag != null)
                             {
-                                reportData = new ReportData
+                                reportData = new ReportData()
                                 {
                                     FileName = tmpReportFile,
                                     Application = null,
@@ -330,7 +323,6 @@ namespace CastReporting.Console
                                     PreviousSnapshot = null,
                                     RuleExplorer = new RuleBLL(connection),
                                     CurrencySymbol = "$",
-                                    ServerVersion = CommonBLL.GetServiceVersion(connection),
                                     Applications = _n_selectedApps,
                                     Category = null,
                                     Tag = arguments.Tag.Name,
@@ -342,7 +334,7 @@ namespace CastReporting.Console
                             }
                             else
                             {
-                                reportData = new ReportData
+                                reportData = new ReportData()
                                 {
                                     FileName = tmpReportFile,
                                     Application = null,
@@ -350,7 +342,6 @@ namespace CastReporting.Console
                                     PreviousSnapshot = null,
                                     RuleExplorer = new RuleBLL(connection),
                                     CurrencySymbol = "$",
-                                    ServerVersion = CommonBLL.GetServiceVersion(connection),
                                     Applications = _n_selectedApps,
                                     Category = null,
                                     Tag = null,
@@ -370,26 +361,15 @@ namespace CastReporting.Console
                             //Set filte report              
                             SetFileName(arguments);
 
-                            reportPath = Path.Combine(string.IsNullOrEmpty(settings.ReportingParameter.GeneratedFilePath)
-                                ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                            reportPath = Path.Combine(string.IsNullOrEmpty(settings.ReportingParameter.GeneratedFilePath) 
+                                ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) 
                                 : settings.ReportingParameter.GeneratedFilePath, arguments.File.Name);
-
+                            
                             if (tmpReportFile.Contains(".xlsx"))
                             {
                                 tmpReportFile = tmpReportFileFlexi;
                             }
-                            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                            {
-                                ConvertToPdfIfNeeded(arguments, ref reportPath, tmpReportFile);
-                            }
-                            else
-                            {
-                                if (reportPath.Contains(".pdf"))
-                                {
-                                    reportPath = reportPath.Replace(".pdf", Path.GetExtension(arguments.Template.Name));
-                                }
-                                File.Copy(tmpReportFile, reportPath, true);
-                            }
+                            File.Copy(tmpReportFile, reportPath, true);
                         }
                         finally
                         {
@@ -516,7 +496,7 @@ namespace CastReporting.Console
                     }
 
                     //Build report              
-                    ReportData reportData = new ReportData
+                    ReportData reportData = new ReportData()
                     {
                         FileName = tmpReportFile,
                         Application = application,
@@ -525,8 +505,7 @@ namespace CastReporting.Console
                         Parameter = settings.ReportingParameter,
                         RuleExplorer = new RuleBLL(connection),
                         SnapshotExplorer = new SnapshotBLL(connection, currentSnapshot),
-                        CurrencySymbol = "$",
-                        ServerVersion = CommonBLL.GetServiceVersion(connection)
+                        CurrencySymbol = "$"
                     };
 
                     using (IDocumentBuilder docBuilder = BuilderFactory.CreateBuilder(reportData, tmpReportFileFlexi))
@@ -546,18 +525,8 @@ namespace CastReporting.Console
                     {
                         tmpReportFile = tmpReportFileFlexi;
                     }
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        ConvertToPdfIfNeeded(arguments, ref reportPath, tmpReportFile);
-                    }
-                    else
-                    {
-                        if (reportPath.Contains(".pdf"))
-                        {
-                            reportPath = reportPath.Replace(".pdf", Path.GetExtension(arguments.Template.Name));
-                        }
-                        File.Copy(tmpReportFile, reportPath, true);
-                    }
+                    File.Copy(tmpReportFile, reportPath, true);
+
                     LogHelper.Instance.LogInfo("Report moved to generation directory successfully");
 
                     return reportPath;
@@ -574,54 +543,10 @@ namespace CastReporting.Console
             }
         }
 
-        private static void ConvertToPdfIfNeeded(XmlCastReport arguments, ref string reportPath, string tmpReportFile)
-        {
-            // convert docx or pptx to pdf
-            if (reportPath.Contains(".pdf"))
-            {
-                try
-                {
-                    if (tmpReportFile.Contains(".docx"))
-                    {
-                        Microsoft.Office.Interop.Word.Application appWord = new Microsoft.Office.Interop.Word.Application();
-                        Document wordDocument = appWord.Documents.Open(tmpReportFile);
-                        wordDocument.ExportAsFixedFormat(reportPath, WdExportFormat.wdExportFormatPDF);
-                        wordDocument.Close();
-                        appWord.Quit();
-                    }
-                    else if (tmpReportFile.Contains(".pptx"))
-                    {
-                        Microsoft.Office.Interop.PowerPoint.Application appPowerpoint = new Microsoft.Office.Interop.PowerPoint.Application();
-                        Presentation appPres = appPowerpoint.Presentations.Open(tmpReportFile);
-                        appPres.ExportAsFixedFormat(reportPath, PpFixedFormatType.ppFixedFormatTypePDF);
-                        appPres.Close();
-                        appPowerpoint.Quit();
-                    }
-                    else
-                    {
-                        string report = reportPath.Replace(".pdf", Path.GetExtension(arguments.Template.Name));
-                        File.Copy(tmpReportFile, report, true);
-                    }
-                }
-                catch (Exception e)
-                {
-                    // Error if office not installed, then do not save as pdf
-                    LogHelper.Instance.LogWarn("Report cannot be saved as pdf : " + e.Message);
-                    reportPath = reportPath.Replace(".pdf", Path.GetExtension(arguments.Template.Name));
-                    File.Copy(tmpReportFile, reportPath, true);
-                }
-            }
-            else
-            {
-                //Copy report file to the selected destination
-                File.Copy(tmpReportFile, reportPath, true);
-            }
-        }
-
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="arguments"></param>
+         /// 
+         /// </summary>
+         /// <param name="arguments"></param>
         private static void SetFileName(XmlCastReport arguments)
         {
             if (arguments.File == null)
