@@ -96,7 +96,8 @@ namespace CastReporting.Repositories
                 Directory.CreateDirectory(path);
             return path;
             */
-            return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            Assembly _entryAssembly = Assembly.GetEntryAssembly();
+            return Path.GetDirectoryName(_entryAssembly?.Location);
         }
 
 

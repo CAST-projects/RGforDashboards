@@ -51,7 +51,7 @@ namespace CastReporting.Reporting.Block.Table
 
                           resultModule[Constants.BusinessCriteria.Transferability]?.TotalCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value ,
 
-                          resultModule[Constants.BusinessCriteria.Changeability]?.TotalCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value ,
+                          resultModule[Constants.BusinessCriteria.Changeability]?.TotalCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value 
 
                         });
 
@@ -73,7 +73,7 @@ namespace CastReporting.Reporting.Block.Table
 
                           resultModule[Constants.BusinessCriteria.Transferability]?.AddedCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value ,
 
-                          resultModule[Constants.BusinessCriteria.Changeability]?.AddedCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value ,
+                          resultModule[Constants.BusinessCriteria.Changeability]?.AddedCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value 
 
                         });
 
@@ -94,7 +94,7 @@ namespace CastReporting.Reporting.Block.Table
 
                           resultModule[Constants.BusinessCriteria.Transferability]?.RemovedCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value ,
 
-                          resultModule[Constants.BusinessCriteria.Changeability]?.RemovedCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value ,
+                          resultModule[Constants.BusinessCriteria.Changeability]?.RemovedCriticalViolations?.ToString(MetricFormat) ?? Constants.No_Value 
 
                         });
 

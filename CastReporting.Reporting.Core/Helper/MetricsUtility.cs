@@ -448,6 +448,7 @@ namespace CastReporting.Reporting
 
             if (string.IsNullOrEmpty(aggregator))
             {
+                // ReSharper disable once SwitchStatementMissingSomeCases default case is managed in next switch
                 switch (metType)
                 {
                     case metricType.QualityRule:
@@ -465,10 +466,7 @@ namespace CastReporting.Reporting
             switch (aggregator)
             {
                 case "SUM":
-                    foreach (var _result in results)
-                    {
-                        curResult = _result.result != null ? curResult + _result.result : curResult;
-                    }
+                    curResult = results.Aggregate(curResult, (current, result) => result.result != null ? current + result.result : current);
                     break;
                 case "AVERAGE":
                     int nbCurRes = 0;
@@ -535,7 +533,7 @@ namespace CastReporting.Reporting
                     {
                         // This is a Business criteria
 
-                        List<RuleDetails> rules =  reportData.RuleExplorer.GetRulesDetails(snapshot.DomainId, metricId, snapshot.Id).ToList();
+                        List<RuleDetails> rules = reportData.RuleExplorer.GetRulesDetails(snapshot.DomainId, metricId, snapshot.Id).ToList();
                         qualityRules.AddRange(critical ? rules.Where(_ => _.Critical).Select(_ => _.Key.ToString()).ToList() : rules.Select(_ => _.Key.ToString()).ToList());
                     }
                     else

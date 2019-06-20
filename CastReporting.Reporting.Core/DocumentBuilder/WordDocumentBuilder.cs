@@ -160,19 +160,15 @@ namespace CastReporting.Reporting.Builder
 
         private static OpenXmlPartRootElement GetRootContainer(OpenXmlPartContainer container)
         {
-            var _part = container as HeaderPart;
-            if (_part != null)
+            if (container is HeaderPart _part)
             {
                 return _part.Header;
             }
-            else if (container is FooterPart)
+            if (container is FooterPart _container)
             {
-                return ((FooterPart)container).Footer;
+                return _container.Footer;
             }
-            else
-            {
-                return ((WordprocessingDocument)container).MainDocumentPart.Document;
-            }
+            return ((WordprocessingDocument)container).MainDocumentPart.Document;
         }
         #endregion METHODS
     }

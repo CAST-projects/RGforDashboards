@@ -68,8 +68,8 @@ namespace CastReporting.Reporting.Block.Table
 
             if (_prop1Name == string.Empty || _prop2Name == string.Empty)
             {
-                rowData.AddRange(new List<string>() { Labels.PropertiesNotAvailable, string.Empty, string.Empty });
-                rowData.AddRange(new List<string>()
+                rowData.AddRange(new List<string> { Labels.PropertiesNotAvailable, string.Empty, string.Empty });
+                rowData.AddRange(new List<string>
                 {
                     "codeLines", string.Empty, string.Empty,
                     "commentedCodeLines", string.Empty, string.Empty,
@@ -110,7 +110,7 @@ namespace CastReporting.Reporting.Block.Table
                 }
                 else
                 {
-                    rowData.AddRange(new List<string>() { Labels.SnapshotNotTheLatestOne, string.Empty, string.Empty });
+                    rowData.AddRange(new List<string> { Labels.SnapshotNotTheLatestOne, string.Empty, string.Empty });
                 }
             }
 

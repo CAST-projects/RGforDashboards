@@ -21,7 +21,7 @@ namespace CastReporting.Console
     /// <summary>
     /// 
     /// </summary>
-    class Program
+    internal class Program
     {
         private Program()
         {
@@ -32,7 +32,7 @@ namespace CastReporting.Console
         /// 
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
+        private static void Main(string[] args)
         { 
             string showhelp;
             
@@ -203,10 +203,7 @@ namespace CastReporting.Console
                                 intAppYes = 1;
                                 break;
                             }
-                            else
-                            {
-                                intAppYes = 0;
-                            }
+                            intAppYes = 0;
                         }
 
                         if (intAppYes == 0)
@@ -231,7 +228,8 @@ namespace CastReporting.Console
                     }
                     LogHelper.Instance.LogInfo("Snapshots in the portfolio found successfully");
                     List<Snapshot> _n_snaps = new List<Snapshot>();
-                    if (_snapshots != null)
+                    if (_snapshots == null) return reportPath;
+
                     {
                         Snapshot[] _selectedApps_snapshots = _snapshots.ToArray<Snapshot>();
                         var _snapsToIgnore = PortfolioSnapshotsBLL.BuildSnapshotResult(connection, _selectedApps_snapshots, true);
@@ -247,10 +245,7 @@ namespace CastReporting.Console
                                     intRemoveYes = 1;
                                     break;
                                 }
-                                else
-                                {
-                                    intRemoveYes = 0;
-                                }
+                                intRemoveYes = 0;
                             }
                             if (intRemoveYes == 0)
                             {
@@ -619,7 +614,7 @@ namespace CastReporting.Console
         {
             if (arguments.File == null)
             {
-                arguments.File = new XmlTagName() { Name = null };
+                arguments.File = new XmlTagName { Name = null };
             }
             if (string.IsNullOrEmpty(arguments.File.Name))
             {

@@ -42,7 +42,7 @@ namespace CastReporting.Repositories
 
         private PropertyInfo ResolveProperty(IEnumerable<PropertyInfo> candidates, string propName)
         {
-            return (propName.Length == 0) ? null : candidates.FirstOrDefault(_ => IsMatch(_, propName));
+            return propName.Length == 0 ? null : candidates.FirstOrDefault(_ => IsMatch(_, propName));
         }
 
         private void SetTargetProps(IEnumerable<string> propNames)
@@ -120,11 +120,8 @@ namespace CastReporting.Repositories
                     pos++;
                     return input.Substring(start, pos - start - 1);
                 }
-                else
-                {
-                    // continue
-                    pos++;
-                }
+                // continue
+                pos++;
             }
 
             // return rest of string
@@ -142,21 +139,20 @@ namespace CastReporting.Repositories
                 string value;
 
                 char ch = input[pos];
-                if (ch == ';')
+                switch (ch)
                 {
-                    // no value
-                    value = null;
-                    pos++;
-                }
-                else if (ch == '"')
-                {
-                    // escaped string
-                    value = ExtractEscapedValue(input, ref pos, len);
-                }
-                else
-                {
-                    // raw value
-                    value = ExtractRawValue(input, ref pos, len);
+                    case ';':
+                        // no value
+                        value = null;
+                        pos++;
+                        break;
+                    case '"':
+                        // escaped string
+                        value = ExtractEscapedValue(input, ref pos, len);
+                        break;
+                    default:
+                        value = ExtractRawValue(input, ref pos, len);
+                        break;
                 }
 
                 values.Add(value);
@@ -176,19 +172,17 @@ namespace CastReporting.Repositories
             int count = _props.Count;
             for (var i = 0; i < values.Count; i++)
             {
-                if (0 <= i && i < count)
+                if (0 > i || i >= count) continue;
+                PropertyInfo pi = _props[i];
+                try
                 {
-                    PropertyInfo pi = _props[i];
-                    try
-                    {
-                        if (pi != null)
-                            pi.SetValue(item, values[i], null);
-                    }
-                    catch (Exception ex)
-                    {
-                        // trace and ignore
-                        System.Diagnostics.Trace.WriteLine(ex.ToString());
-                    }
+                    if (pi != null)
+                        pi.SetValue(item, values[i], null);
+                }
+                catch (Exception ex)
+                {
+                    // trace and ignore
+                    System.Diagnostics.Trace.WriteLine(ex.ToString());
                 }
             }
 

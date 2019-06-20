@@ -65,7 +65,7 @@ namespace CastReporting.Reporting.Block.Table
 	                                          name = cur.Name,
 	                                          curValue = cur.Value,
 	                                          preValue = null,
-	                                          evolValue = null,
+	                                          evolValue = null
 	
 	                                      }).ToList();
 	            	#endregion Current Snapshot
@@ -83,7 +83,7 @@ namespace CastReporting.Reporting.Block.Table
 	                                          name = cur.Name,
 	                                          curValue = cur.Value,
 	                                          preValue = prev.Value,
-	                                          evolValue = cur.Value - prev.Value,
+	                                          evolValue = cur.Value - prev.Value
 	
 	                                      }).ToList();
 
@@ -95,7 +95,7 @@ namespace CastReporting.Reporting.Block.Table
 	                                                    name = cur.Name,
 	                                                    curValue = cur.Value,
 	                                                    preValue = null,
-	                                                    evolValue = null,
+	                                                    evolValue = null
 	                                                });
 
                  		_resultCompartTecno.AddRange(from prev in _technologyResultPreviousSnapshot
@@ -105,7 +105,7 @@ namespace CastReporting.Reporting.Block.Table
                                                         name = prev.Name,
                                                         curValue = null,
                                                         preValue = prev.Value,
-                                                        evolValue = -prev.Value,
+                                                        evolValue = -prev.Value
                                                     }); 
 					}
 					#endregion Previous Snapshot
@@ -122,8 +122,8 @@ namespace CastReporting.Reporting.Block.Table
                                 item.name
                                 , item.curValue?.ToString("N0") ?? Domain.Constants.No_Value
                                 , item.preValue?.ToString("N0") ?? Domain.Constants.No_Value
-                                , (item.evolValue.HasValue)? FormatEvolution((int)item.evolValue.Value) : Domain.Constants.No_Value
-                                , (item.evolValue.HasValue && item.preValue.HasValue && Math.Abs(item.preValue.Value) > 0) ? FormatPercent((item.evolValue.Value/item.preValue.Value))
+                                , item.evolValue.HasValue? FormatEvolution((int)item.evolValue.Value) : Domain.Constants.No_Value
+                                , item.evolValue.HasValue && item.preValue.HasValue && Math.Abs(item.preValue.Value) > 0 ? FormatPercent(item.evolValue.Value/item.preValue.Value)
                                                                                                                  : Domain.Constants.No_Value
                     });
                     nbRows++;

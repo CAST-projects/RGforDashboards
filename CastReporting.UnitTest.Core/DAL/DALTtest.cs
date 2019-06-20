@@ -27,7 +27,7 @@ namespace CastReporting.UnitTest.Repositories
         /// <summary>
         /// 
         /// </summary>
-        readonly WSConnection _connection = new WSConnection()
+        private readonly WSConnection _connection = new WSConnection
         {
             // if using demo-eu-aed, use domain AED1, if using localhost, domain is AED
             Url = "https://demo-eu.castsoftware.com/Engineering/rest/",
@@ -301,7 +301,7 @@ namespace CastReporting.UnitTest.Repositories
         [TestMethod()]
         public void GetConfQualityRuleChinese()
         {
-            WSConnection _connection3 = new WSConnection()
+            WSConnection _connection3 = new WSConnection
             {
                 Url = "http://dash-aed-tomcat:8585/CAST-Health-Engineering/rest/",
                 Login = "cio",

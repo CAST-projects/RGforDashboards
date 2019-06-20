@@ -120,11 +120,11 @@ namespace CastReporting.Reporting.Block.Table
         private IEnumerable<string> GetDeltaComponents(ReportData reportData, string href, string status, string currentSnapshotId, string previousSnapshotId, string complexity = "all", string technology = null)
         {
             List<string> dataList = new List<string>();
-            IEnumerable<DeltaComponent> components = complexity.Equals("all") || !(new[] {"low", "moderate", "high", "very high"}.Contains(complexity))
+            IEnumerable<DeltaComponent> components = complexity.Equals("all") || !new[] {"low", "moderate", "high", "very high"}.Contains(complexity)
                 ? reportData.RuleExplorer.GetDeltaComponents(href, status, currentSnapshotId, previousSnapshotId, technology).OrderBy(_ => _.Name)
                 : reportData.RuleExplorer.GetDeltaComponents(href, status, currentSnapshotId, previousSnapshotId, technology).Where(_ => _.Complexity.ToLower().Equals(complexity + " risk")).OrderBy(_ => _.Name);
 
-            components = (_nbLimit != -1) ? components.Take(_nbLimit) : components;
+            components = _nbLimit != -1 ? components.Take(_nbLimit) : components;
             if (!components.Any())
             {
                 dataList.AddRange(new[] { Labels.NoData, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty });

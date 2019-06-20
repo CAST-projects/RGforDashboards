@@ -43,14 +43,13 @@ namespace Cast.Util.Log
         {
             get
             {
-                if (null == _instance)
+                if (null != _instance) return _instance;
+                lock (Lock)
                 {
-                    lock (Lock)
+                    if (null == _instance)
                     {
-                        if (null == _instance)
-                        {
-                            _instance = new LogHelper();
-                        }
+                        // ReSharper disable once PossibleMultipleWriteAccessInDoubleCheckLocking
+                        _instance = new LogHelper();
                     }
                 }
                 return _instance;
@@ -216,8 +215,9 @@ namespace Cast.Util.Log
             GlobalContext.Properties["APPNAME"] = "ReportGenerator";
             GlobalContext.Properties["LOGPATH"] = pathLog;
             GlobalContext.Properties["DATE"] = DateTime.Today.ToString("yyyyMMdd");
-            var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            string configFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "log4net.config");
+            Assembly _entryAssembly = Assembly.GetEntryAssembly();
+            var logRepository = LogManager.GetRepository(_entryAssembly);
+            string configFilePath = Path.Combine(Path.GetDirectoryName(_entryAssembly?.Location), "log4net.config");
             //Console.Out.WriteLine(configFilePath);
             XmlConfigurator.Configure(logRepository, new FileInfo(configFilePath));
         }

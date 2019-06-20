@@ -32,16 +32,16 @@ namespace CastReporting.Reporting.Block.Table
             int rowCount = 0;
 
             #region Options
-            int nblimit;
-            if (null == options || !options.ContainsKey("CNT") || !int.TryParse(options["CNT"], out nblimit)) {
+            if (null == options || !options.ContainsKey("CNT") || !int.TryParse(options["CNT"], out int nblimit))
+            {
                 nblimit = reportData.Parameter.NbResultDefault;
             }
-            int techcriteriaId;
-            if (null == options || !options.ContainsKey("TCID") || !int.TryParse(options["TCID"], out techcriteriaId)) {
+            if (null == options || !options.ContainsKey("TCID") || !int.TryParse(options["TCID"], out int techcriteriaId))
+            {
                 throw new ArgumentException("Impossible to build TECHNICAL_CRITERIA_RULES : Need technical criterion id.");
             }
-            int bizCriteriaId;
-            if (null == options || !options.ContainsKey("BZID") || !int.TryParse(options["BZID"], out bizCriteriaId)) {
+            if (null == options || !options.ContainsKey("BZID") || !int.TryParse(options["BZID"], out int bizCriteriaId))
+            {
                 throw new ArgumentException("Impossible to build TECHNICAL_CRITERIA_RULES : Need business criterion id.");
             }
             #endregion Options
@@ -59,7 +59,7 @@ namespace CastReporting.Reporting.Block.Table
             keys?.AddRange(businessCriteria.NonCriticalRulesViolation.Select(_ => _.Reference.Key));
 
             // ReSharper disable once PossibleNullReferenceException
-            var technicalCriteria = (keys != null) ? reportData.CurrentSnapshot.TechnicalCriteriaResults.FirstOrDefault(_ => _.Reference.Key == techcriteriaId && keys.Contains(_.Reference.Key)) : null;
+            var technicalCriteria = keys != null ? reportData.CurrentSnapshot.TechnicalCriteriaResults.FirstOrDefault(_ => _.Reference.Key == techcriteriaId && keys.Contains(_.Reference.Key)) : null;
 
             if (technicalCriteria?.RulesViolation != null)
             {
@@ -95,7 +95,7 @@ namespace CastReporting.Reporting.Block.Table
                 HasColumnHeaders = true,
                 NbRows = rowCount + 1,
                 NbColumns = 3,
-                Data = rowData,
+                Data = rowData
             };
 
             return resultTable;

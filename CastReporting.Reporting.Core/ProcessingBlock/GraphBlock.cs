@@ -49,7 +49,7 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
 
         public static bool IsMatching(string blockType)
         {
-            return (BlockTypeName.Equals(blockType));
+            return BlockTypeName.Equals(blockType);
         }
 
         /// <summary>
@@ -129,7 +129,8 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                 #endregion Get the block Id in document
 
                 var chartPart = GetChartPart(pPackage, pBlock, chartId);
-                if (null != chartPart)
+                if (null == chartPart) return;
+
                 {
                     string spreadsheetId = GetSpreadsheetId(chartPart);
                     if (!string.IsNullOrWhiteSpace(spreadsheetId))
@@ -177,9 +178,9 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                                                 var oneRow = allRows.ElementAt(ctn);//[ctn];
                                                 // DCO - 9/21/2012 - I added the condition that the count of CELL must be indeed equal of numCorrectSeries OR to the number of column
                                                 // It happens for graphs with 3 cells defined per row, but only two used (so no Value for third cell), when NbColumns was == 2
-                                                var isRowValid = ((oneRow.Descendants(S.c).Count() == nbCorrectSeries || oneRow.Descendants(S.c).Count() >= pContent.NbColumns) &&
-                                                                  (oneRow.Descendants(S.c).Descendants(S.v).Count() == oneRow.Descendants(S.c).Count() ||
-                                                                   oneRow.Descendants(S.c).Descendants(S.v).Count() >= pContent.NbColumns));
+                                                var isRowValid = (oneRow.Descendants(S.c).Count() == nbCorrectSeries || oneRow.Descendants(S.c).Count() >= pContent.NbColumns) &&
+                                                                 (oneRow.Descendants(S.c).Descendants(S.v).Count() == oneRow.Descendants(S.c).Count() ||
+                                                                  oneRow.Descendants(S.c).Descendants(S.v).Count() >= pContent.NbColumns);
 
                                                 // We remove rows that are not defined in content
                                                 if (isRowValid == false || ctRow >= pContent.NbRows)
@@ -306,9 +307,9 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                                                     }
 
                                                     // We inject text
-                                                    var targetText = ((ctRow * pContent.NbColumns + ctCell) < contentEltCount ?
+                                                    var targetText = ctRow * pContent.NbColumns + ctCell < contentEltCount ?
                                                         pContent.Data?.ElementAt(ctRow * pContent.NbColumns + ctCell) :
-                                                        string.Empty);
+                                                        string.Empty;
                                                     if (null != targetText && !"<KEEP>".Equals(targetText)) // Keep for managing UniversalGraph
                                                     {
                                                         var isSharedString = oneCell.Attribute(NoNamespace.t);
@@ -340,7 +341,7 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                                         // We modify Table Definition (defining scope of Graph)
                                         foreach (TableDefinitionPart t in wsp.TableDefinitionParts)
                                         {
-                                            t.Table.Reference = String.Concat(WorksheetAccessor.GetColumnId(1), 1, ":",
+                                            t.Table.Reference = string.Concat(WorksheetAccessor.GetColumnId(1), 1, ":",
                                                 WorksheetAccessor.GetColumnId(pContent.NbColumns), pContent.NbRows);
 
                                             // We reduce the scope TableColumn if needed
@@ -515,8 +516,8 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                             int endRow;
                             int endCol;
                             string sheetName = WorksheetAccessorExt.GetFormulaCoord(oneFormula.Value, out startRow, out startCol, out endRow, out endCol);
-                            if ((startRow > content.NbRows && endRow > content.NbRows) ||
-                                (startCol > content.NbColumns && endCol > content.NbColumns))
+                            if (startRow > content.NbRows && endRow > content.NbRows ||
+                                startCol > content.NbColumns && endCol > content.NbColumns)
                             {
                                 // We need to remove the whole serie as it is out of scope
                                 isSerieDeleted = true;
@@ -524,7 +525,7 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                                 break;
                             }
                             // ignore if mapped to a single cell of first row or first column
-                            if ((endCol - startCol == 0 && endRow - startRow == 0) && (startCol == 1 || startRow == 1))
+                            if (endCol - startCol == 0 && endRow - startRow == 0 && (startCol == 1 || startRow == 1))
                             	continue;
                             // otherwise this is mapped to a range: update
                             if (startCol == endCol && endRow != content.NbRows && startRow != endRow)
@@ -532,11 +533,9 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                                 endRow = content.NbRows; // -startRow;
                                 oneFormula.Value = WorksheetAccessorExt.SetFormula(sheetName, startRow, startCol, endRow, endCol);
                             }
-                            if (startRow == endRow && endCol != content.NbColumns && startCol != endCol)
-                            {
-                                endCol = content.NbColumns; // -startRow;
-                                oneFormula.Value = WorksheetAccessorExt.SetFormula(sheetName, startRow, startCol, endRow, endCol);
-                            }
+                            if (startRow != endRow || endCol == content.NbColumns || startCol == endCol) continue;
+                            endCol = content.NbColumns; // -startRow;
+                            oneFormula.Value = WorksheetAccessorExt.SetFormula(sheetName, startRow, startCol, endRow, endCol);
                         }
                         // ------------
 
@@ -633,69 +632,69 @@ namespace CastReporting.Reporting.Builder.BlockProcessing
                         }
 
                         // Data Label Modification
-                        if (content.GraphDataLabelText)
-                        {
-                            // TODO: Create elements if it does not exist
-                            // As of today, the user needs to display Axis value, that will be changed by text by the following code
-                            IEnumerable<XElement> dataLabels = oneSerie.Descendants(C.dLbl);
-                            var tempLbl = dataLabels.FirstOrDefault();
-                            if (tempLbl != null)
-                            {
-                                XElement parentNode = tempLbl.Parent;
+                        if (!content.GraphDataLabelText) continue;
 
-                                // We copied new row if needed
-                                int nbDataLabels = dataLabels.Count();
-                                if (content.DataLabel.Count() > nbDataLabels)
+                        // TODO: Create elements if it does not exist
+                        // As of today, the user needs to display Axis value, that will be changed by text by the following code
+                        IEnumerable<XElement> dataLabels = oneSerie.Descendants(C.dLbl);
+                        var tempLbl = dataLabels.FirstOrDefault();
+                        if (tempLbl != null)
+                        {
+                            XElement parentNode = tempLbl.Parent;
+
+                            // We copied new row if needed
+                            int nbDataLabels = dataLabels.Count();
+                            if (content.DataLabel.Count() > nbDataLabels)
+                            {
+                                var idx = nbDataLabels - 1;
+                                var lastElement = dataLabels.ElementAt(idx);
+                                while (content.DataLabel.Count() > nbDataLabels)
                                 {
-                                    var idx = nbDataLabels - 1;
-                                    var lastElement = dataLabels.ElementAt(idx);
-                                    while (content.DataLabel.Count() > nbDataLabels)
+                                    XElement newElement = new XElement(lastElement);
+                                    var idxValue = newElement.Descendants(C.idx).FirstOrDefault();
+                                    // We need to assign IDX at 0 so we're sure it is in the correct range, we change the value afterwards
+                                    if (idxValue?.Attribute(NoNamespace.val) != null)
                                     {
-                                        XElement newElement = new XElement(lastElement);
-                                        var idxValue = newElement.Descendants(C.idx).FirstOrDefault();
-                                        // We need to assign IDX at 0 so we're sure it is in the correct range, we change the value afterwards
-                                        if (idxValue?.Attribute(NoNamespace.val) != null)
-                                        {
-                                            idxValue.Attribute(NoNamespace.val).SetValue(0);
-                                        }
-                                        parentNode?.AddFirst(newElement);
-                                        nbDataLabels += 1;
+                                        idxValue.Attribute(NoNamespace.val).SetValue(0);
                                     }
-                                }
-                                // We remove DataLabel is there are too many
-                                nbDataLabels = dataLabels.Count();
-                                if (content.DataLabel.Count() < nbDataLabels)
-                                {
-                                    while (content.DataLabel.Count() < nbDataLabels)
-                                    {
-                                        dataLabels.ElementAt(nbDataLabels - 1).Remove();
-                                        nbDataLabels -= 1;
-                                    }
+                                    parentNode?.AddFirst(newElement);
+                                    nbDataLabels += 1;
                                 }
                             }
-                            // ----
-
-                            int nbDlbl = dataLabels.Count();
-                            for (int ctDlbl = 0; ctDlbl < nbDlbl; ctDlbl += 1)
+                            // We remove DataLabel is there are too many
+                            nbDataLabels = dataLabels.Count();
+                            if (content.DataLabel.Count() < nbDataLabels)
                             {
-                                var oneDataLbl = dataLabels.ElementAt(ctDlbl);
-                                var idxTag = oneDataLbl.Descendants(C.idx).FirstOrDefault();
-                                if (idxTag?.Attribute(NoNamespace.val) != null)
+                                while (content.DataLabel.Count() < nbDataLabels)
                                 {
-                                    idxTag.Attribute(NoNamespace.val).SetValue(ctDlbl);
+                                    dataLabels.ElementAt(nbDataLabels - 1).Remove();
+                                    nbDataLabels -= 1;
                                 }
-
-                                var indexVal = oneDataLbl.Descendants(C.idx).FirstOrDefault();
-                                if (indexVal?.Attribute(NoNamespace.val) == null || "".Equals(indexVal.Attribute(NoNamespace.val).Value))
-                                {
-                                    continue;
-                                }
-                                int idxDataLbl = Convert.ToInt32(indexVal.Attribute(NoNamespace.val).Value);
-                                var textTag = oneDataLbl.Descendants(C.tx).FirstOrDefault();
-                                var textValue = textTag?.Descendants(A.t).FirstOrDefault();
-                                textValue?.SetValue(content.DataLabel.ElementAt(idxDataLbl));
                             }
                         }
+                        // ----
+
+                        int nbDlbl = dataLabels.Count();
+                        for (int ctDlbl = 0; ctDlbl < nbDlbl; ctDlbl += 1)
+                        {
+                            var oneDataLbl = dataLabels.ElementAt(ctDlbl);
+                            var idxTag = oneDataLbl.Descendants(C.idx).FirstOrDefault();
+                            if (idxTag?.Attribute(NoNamespace.val) != null)
+                            {
+                                idxTag.Attribute(NoNamespace.val).SetValue(ctDlbl);
+                            }
+
+                            var indexVal = oneDataLbl.Descendants(C.idx).FirstOrDefault();
+                            if (indexVal?.Attribute(NoNamespace.val) == null || "".Equals(indexVal.Attribute(NoNamespace.val).Value))
+                            {
+                                continue;
+                            }
+                            int idxDataLbl = Convert.ToInt32(indexVal.Attribute(NoNamespace.val).Value);
+                            var textTag = oneDataLbl.Descendants(C.tx).FirstOrDefault();
+                            var textValue = textTag?.Descendants(A.t).FirstOrDefault();
+                            textValue?.SetValue(content.DataLabel.ElementAt(idxDataLbl));
+                        }
+
                         #endregion Serie Treatment
                     }
                 }
