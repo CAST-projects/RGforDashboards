@@ -26,7 +26,7 @@ namespace CastReporting.Reporting.Block.Table
 
             string moduleName = options.GetOption("MODULE", string.Empty);
             string technoName = options.GetOption("TECHNOLOGY", string.Empty);
-            if (moduleName != string.Empty && technoName != string.Empty)
+            if (moduleName.Length > 0 && technoName.Length > 0)
             {
                 moduleName = string.Empty;
                 technoName = string.Empty;
@@ -89,7 +89,7 @@ namespace CastReporting.Reporting.Block.Table
                 return new TableDefinition { HasRowHeaders = false, HasColumnHeaders = true, NbRows = 2, NbColumns = 8, Data = rowData };
             }
 
-            if (!moduleName.Equals(string.Empty))
+            if (moduleName.Length > 0)
             {
                 Module module = reportData.CurrentSnapshot.Modules.FirstOrDefault(_ => _.Name.Equals(moduleName));
                 if (module != null)
@@ -102,7 +102,7 @@ namespace CastReporting.Reporting.Block.Table
                 return new TableDefinition { HasRowHeaders = false, HasColumnHeaders = true, NbRows = 2, NbColumns = 8, Data = rowData };
             }
 
-            if (!technoName.Equals(string.Empty))
+            if (technoName.Length > 0)
             {
                 if (reportData.Application.Technologies.Contains(technoName))
                 {

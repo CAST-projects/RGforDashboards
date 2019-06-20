@@ -19,12 +19,6 @@ namespace CastReporting.UnitTest.Repositories
     public class CRContextTest
     {
         /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
-
-        /// <summary>
         /// 
         /// </summary>
         private readonly WSConnection _connection = new WSConnection

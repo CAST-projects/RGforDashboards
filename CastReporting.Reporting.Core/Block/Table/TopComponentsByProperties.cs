@@ -66,7 +66,7 @@ namespace CastReporting.Reporting.Block.Table
             string _prop2Name = MetricsUtility.GetPropertyName(prop2);
             rowData.Add(_prop2Name);
 
-            if (_prop1Name == string.Empty || _prop2Name == string.Empty)
+            if (_prop1Name.Length == 0 || _prop2Name.Length == 0)
             {
                 rowData.AddRange(new List<string> { Labels.PropertiesNotAvailable, string.Empty, string.Empty });
                 rowData.AddRange(new List<string>

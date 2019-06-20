@@ -40,7 +40,7 @@ namespace CastReporting.Repositories
             return false;
         }
 
-        private PropertyInfo ResolveProperty(IEnumerable<PropertyInfo> candidates, string propName)
+        private static PropertyInfo ResolveProperty(IEnumerable<PropertyInfo> candidates, string propName)
         {
             return propName.Length == 0 ? null : candidates.FirstOrDefault(_ => IsMatch(_, propName));
         }
@@ -61,7 +61,7 @@ namespace CastReporting.Repositories
 
         #region read values from CSV
 
-        private string ExtractEscapedValue(string input, ref int pos, int len)
+        private static string ExtractEscapedValue(string input, ref int pos, int len)
         {
             string quote = input[pos++].ToString();
             int start = pos;
@@ -109,7 +109,7 @@ namespace CastReporting.Repositories
             return input.Substring(start);
         }
 
-        private string ExtractRawValue(string input, ref int pos, int len)
+        private static string ExtractRawValue(string input, ref int pos, int len)
         {
             int start = pos;
             while (pos < len)
@@ -128,7 +128,7 @@ namespace CastReporting.Repositories
             return input.Substring(start);
         }
 
-        private IList<string> GetValues(string input)
+        private static IList<string> GetValues(string input)
         {
             List<string> values = new List<string>();
 
