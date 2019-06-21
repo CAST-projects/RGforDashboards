@@ -133,8 +133,7 @@ namespace CastReporting.Reporting.Builder
 
         private static void SetCellValue(CellType cell, string value)
         {
-            decimal dx;
-            if (decimal.TryParse(value, out dx))
+            if (decimal.TryParse(value, out decimal dx))
             {
                 cell.CellValue = new CellValue(dx.ToString("G", NumberFormatInfo.InvariantInfo));
                 cell.DataType = CellValues.Number;
@@ -378,8 +377,7 @@ namespace CastReporting.Reporting.Builder
             foreach (Hyperlink hyperlink in hyperlinks.Elements<Hyperlink>())
             {
                 var hyperlinkRowIndexMatch = Regex.Match(hyperlink.Reference.Value, "[0-9]+");
-                uint hyperlinkRowIndex;
-                if (!hyperlinkRowIndexMatch.Success || !uint.TryParse(hyperlinkRowIndexMatch.Value, out hyperlinkRowIndex) || hyperlinkRowIndex < rowIndex) continue;
+                if (!hyperlinkRowIndexMatch.Success || !uint.TryParse(hyperlinkRowIndexMatch.Value, out uint hyperlinkRowIndex) || hyperlinkRowIndex < rowIndex) continue;
                 // if being deleted, hyperlink needs to be removed or moved up
                 if (isDeletedRow)
                 {
