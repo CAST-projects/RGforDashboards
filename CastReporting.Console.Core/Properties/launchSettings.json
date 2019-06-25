@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://aed-tests-perf:8538/CAST-RESTAPI-integrated/rest/ -username cast -password cast -application \"Dream Team\" -domain \"AED8311\" -template \"C:\\ProgramData\\CAST\\ReportGenerator\\1.11.0\\Templates\\2- Word-components-library.docx\" -file \"D:\\temp\\CLITests.docx\" -culture \"EN-en\""
+      "commandLineArgs": "-webservice http://aed-tests-perf:8538/CAST-RESTAPI-integrated/rest/ -username cast -password cast -application \"Dream Team\" -domain \"AED8311\" -template \"C:\\ProgramData\\CAST\\ReportGenerator\\1.11.0\\Templates\\0-tstevolution.docx\" -file \"D:\\temp\\CLITests.docx\" -culture \"EN-en\""
     }
   }
 }

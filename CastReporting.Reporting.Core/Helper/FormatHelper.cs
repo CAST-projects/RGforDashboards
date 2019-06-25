@@ -129,7 +129,7 @@ namespace CastReporting.Reporting.Helper
                     return Color.Beige;
                 case "Gray":
                     return Color.Gray;
-                case "LightGray":
+                case "LightGrey":
                     return Color.LightGray;
             }
             return Color.White;
