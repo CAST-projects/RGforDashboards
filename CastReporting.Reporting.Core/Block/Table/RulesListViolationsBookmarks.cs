@@ -16,7 +16,7 @@ namespace CastReporting.Reporting.Block.Table
     {
         private const string ColorWhite = "White";
         private const string ColorGray = "Gray";
-        private const string ColorLightGray = "colorLightGray";
+        private const string ColorLightGray = "LightGrey";
         public override TableDefinition Content(ReportData reportData, Dictionary<string, string> options)
         {
             List<string> rowData = new List<string>();
