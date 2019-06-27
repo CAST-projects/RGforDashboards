@@ -375,6 +375,9 @@
     <None Update="Data\Snapshot_StdTagResultsSTIGV4R8CAT3.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\Snapshot_StdTagsCWE78results.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Snapshot_StdTagsOWASPresults1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

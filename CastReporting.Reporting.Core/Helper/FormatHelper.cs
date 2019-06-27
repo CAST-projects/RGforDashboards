@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using CastReporting.Domain;
+using CastReporting.Reporting.ReportingModel;
 
 namespace CastReporting.Reporting.Helper
 {
@@ -133,6 +135,20 @@ namespace CastReporting.Reporting.Helper
                     return Color.LightGray;
             }
             return Color.White;
+        }
+
+        public static void AddGrayOrBold(bool detail, List<CellAttributes> cellProps, int cellidx, int? nbViolations)
+        {
+            const string colorBeige = "Beige";
+            const string colorLightGray = "LightGrey";
+            if (detail)
+            {
+                cellProps.Add(new CellAttributes(cellidx, colorLightGray, "bold"));
+            }
+            else if (nbViolations > 0)
+            {
+                cellProps.Add(new CellAttributes(cellidx, colorBeige));
+            }
         }
     }
 }

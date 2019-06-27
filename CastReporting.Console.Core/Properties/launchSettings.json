@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://aed-tests-perf:8538/CAST-RESTAPI-integrated/rest/ -username cast -password cast -application \"Dream Team\" -domain \"AED8311\" -template \"C:\\ProgramData\\CAST\\ReportGenerator\\1.11.0\\Templates\\0-tstevolution.docx\" -file \"D:\\temp\\CLITests.docx\" -culture \"EN-en\""
+      "commandLineArgs": "-webservice http://localhost:8585/CAST-RESTAPI/rest/ -username cast -password cast -application \"webi\" -domain \"webi_ENGINEERING_WEBI\" -template \"C:\\ProgramData\\CAST\\ReportGenerator\\1.11.0\\Templates\\STIG V4R8 Standards- Summary Report-v2.docx\" -file \"D:\\temp\\CLITestsSTIGv2.docx\" -culture \"EN-en\""
     }
   }
 }
