@@ -377,7 +377,7 @@ namespace CastReporting.Reporting.Helper
                             catch (ArgumentException e)
                             {
                                 // When this exception occurs, this is because a metric with same name already exists.
-                                LogHelper.Instance.LogDebug(e.Message);
+                                LogHelper.LogDebug(e.Message);
                                 metricsToRemove.Add(_metricId);
                             }
                         }
@@ -424,7 +424,7 @@ namespace CastReporting.Reporting.Helper
                                 catch (ArgumentException e)
                                 {
                                     // When this exception occurs, this is because a metric with same name already exists.
-                                    LogHelper.Instance.LogDebug(e.Message);
+                                    LogHelper.LogDebug(e.Message);
                                     metricsToRemove.Add(_metricId);
                                 }
                             }
@@ -472,7 +472,7 @@ namespace CastReporting.Reporting.Helper
                                 catch (ArgumentException e)
                                 {
                                     // When this exception occurs, this is because a metric with same name already exists.
-                                    LogHelper.Instance.LogDebug(e.Message);
+                                    LogHelper.LogDebug(e.Message);
                                     metricsToRemove.Add(_metricId);
                                 }
                             }
@@ -538,7 +538,7 @@ namespace CastReporting.Reporting.Helper
                                 catch (ArgumentException e)
                                 {
                                     // When this exception occurs, this is because a metric with same name already exists.
-                                    LogHelper.Instance.LogDebug(e.Message);
+                                    LogHelper.LogDebug(e.Message);
                                     metricsToRemove.Add(_metricId);
                                 }
                             }
@@ -590,7 +590,7 @@ namespace CastReporting.Reporting.Helper
                                     catch (ArgumentException e)
                                     {
                                         // When this exception occurs, this is because a metric with same name already exists.
-                                        LogHelper.Instance.LogDebug(e.Message);
+                                        LogHelper.LogDebug(e.Message);
                                         metricsToRemove.Add(_metricId);
                                     }
                                 }
@@ -644,7 +644,7 @@ namespace CastReporting.Reporting.Helper
                                     catch (ArgumentException e)
                                     {
                                         // When this exception occurs, this is because a metric with same name already exists.
-                                        LogHelper.Instance.LogDebug(e.Message);
+                                        LogHelper.LogDebug(e.Message);
                                         metricsToRemove.Add(_metricId);
                                     }
                                 }
@@ -711,7 +711,7 @@ namespace CastReporting.Reporting.Helper
                                 catch (ArgumentException e)
                                 {
                                     // When this exception occurs, this is because a metric with same name already exists.
-                                    LogHelper.Instance.LogDebug(e.Message);
+                                    LogHelper.LogDebug(e.Message);
                                     metricsToRemove.Add(_metricId);
                                 }
                             }
@@ -763,7 +763,7 @@ namespace CastReporting.Reporting.Helper
                                     catch (ArgumentException e)
                                     {
                                         // When this exception occurs, this is because a metric with same name already exists.
-                                        LogHelper.Instance.LogDebug(e.Message);
+                                        LogHelper.LogDebug(e.Message);
                                         metricsToRemove.Add(_metricId);
                                     }
                                 }
@@ -818,7 +818,7 @@ namespace CastReporting.Reporting.Helper
                                     catch (ArgumentException e)
                                     {
                                         // When this exception occurs, this is because a metric with same name already exists.
-                                        LogHelper.Instance.LogDebug(e.Message);
+                                        LogHelper.LogDebug(e.Message);
                                         metricsToRemove.Add(_metricId);
                                     }
                                 }
@@ -888,7 +888,7 @@ namespace CastReporting.Reporting.Helper
                                     catch (ArgumentException e)
                                     {
                                         // When this exception occurs, this is because a metric with same name already exists.
-                                        LogHelper.Instance.LogDebug(e.Message);
+                                        LogHelper.LogDebug(e.Message);
                                         metricsToRemove.Add(_metricId);
                                     }
                                 }
@@ -944,7 +944,7 @@ namespace CastReporting.Reporting.Helper
                                         catch (ArgumentException e)
                                         {
                                             // When this exception occurs, this is because a metric with same name already exists.
-                                            LogHelper.Instance.LogDebug(e.Message);
+                                            LogHelper.LogDebug(e.Message);
                                             metricsToRemove.Add(_metricId);
                                         }
                                     }
@@ -1002,7 +1002,7 @@ namespace CastReporting.Reporting.Helper
                                         catch (ArgumentException e)
                                         {
                                             // When this exception occurs, this is because a metric with same name already exists.
-                                            LogHelper.Instance.LogDebug(e.Message);
+                                            LogHelper.LogDebug(e.Message);
                                             metricsToRemove.Add(_metricId);
                                         }
                                     }
