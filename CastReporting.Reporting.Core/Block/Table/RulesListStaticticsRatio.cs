@@ -42,6 +42,7 @@ namespace CastReporting.Reporting.Block.Table
             }
             bool displayCompliance = options.GetBoolOption("COMPLIANCE");
             bool sortedByCompliance = displayCompliance && options.GetOption("SORTED", "TOTAL").Equals("COMPLIANCE");
+            bool displayEvolution = options.GetOption("EVOLUTION", "true").ToLower().Equals("true");
 
             bool vulnerability = options.GetOption("LBL", "vulnerabilities").ToLower().Equals("vulnerabilities");
             string lbltotal = vulnerability ? Labels.TotalVulnerabilities : Labels.TotalViolations;
@@ -57,10 +58,13 @@ namespace CastReporting.Reporting.Block.Table
             cellidx++;
             headers.Append(lbltotal);
             cellidx++;
-            headers.Append(lbladded);
-            cellidx++;
-            headers.Append(lblremoved);
-            cellidx++;
+            headers.Append(lbladded, displayEvolution);
+            headers.Append(lblremoved, displayEvolution);
+            if (displayEvolution)
+            {
+                cellidx++; // for added
+                cellidx++; // for removed
+            }
             headers.Append(Labels.ComplianceScorePercent, displayCompliance);
             if (displayCompliance) cellidx++;
 
@@ -93,18 +97,21 @@ namespace CastReporting.Reporting.Block.Table
                         cellProps.Add(new CellAttributes(cellidx, colorBeige));
                     }
                     cellidx++;
-                    dataRow.Set(lbladded, detailResult.EvolutionSummary?.AddedViolations.NAIfEmpty("N0"));
-                    if (nbViolations > 0)
+                    if (displayEvolution)
                     {
-                        cellProps.Add(new CellAttributes(cellidx, colorBeige));
+                        dataRow.Set(lbladded, detailResult.EvolutionSummary?.AddedViolations.NAIfEmpty("N0"));
+                        if (nbViolations > 0)
+                        {
+                            cellProps.Add(new CellAttributes(cellidx, colorBeige));
+                        }
+                        cellidx++;
+                        dataRow.Set(lblremoved, detailResult.EvolutionSummary?.RemovedViolations.NAIfEmpty("N0"));
+                        if (nbViolations > 0)
+                        {
+                            cellProps.Add(new CellAttributes(cellidx, colorBeige));
+                        }
+                        cellidx++;
                     }
-                    cellidx++;
-                    dataRow.Set(lblremoved, detailResult.EvolutionSummary?.RemovedViolations.NAIfEmpty("N0"));
-                    if (nbViolations > 0)
-                    {
-                        cellProps.Add(new CellAttributes(cellidx, colorBeige));
-                    }
-                    cellidx++;
                     if (displayCompliance)
                     {
                         dataRow.Set(Labels.ComplianceScorePercent, detailResult.ViolationRatio?.Ratio.FormatPercent(false));
