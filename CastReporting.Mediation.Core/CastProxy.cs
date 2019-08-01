@@ -71,6 +71,13 @@ namespace CastReporting.Mediation
         {
             CookieContainer = cookies ?? new CookieContainer();
             AutoRedirect = autoRedirect;
+            // to debug on https with self signed certificat, disable the certificate validation in the settings
+            // add line <ServerCertificateValidation>disable</ServerCertificateValidation> in the reporting parameters
+            if (!validateCertificate)
+            {
+                ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+            }
+
             _restApiKey = apiKey;
             if (cookies?.Count > 0)
             {
@@ -87,14 +94,6 @@ namespace CastReporting.Mediation
                 string credentials = CreateBasicAuthenticationCredentials(login, password);
                 Headers.Add(HttpRequestHeader.Authorization, credentials);
             }
-
-            // to debug on https with self signed certificat, disable the certificate validation in the settings
-            // add line <ServerCertificateValidation>disable</ServerCertificateValidation> in the reporting parameters
-            if (!validateCertificate)
-            {
-                ServicePointManager.ServerCertificateValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
-            }
-
         }
 
         /// <summary>
