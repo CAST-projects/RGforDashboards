@@ -318,6 +318,15 @@
     <None Update="Data\QRviolRatioModules.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\QualityStandardsCategorySTIGV4R8CAT1.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\QualityStandardsCategorySTIGV4R8CAT2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\QualityStandardsCategorySTIGV4R8CAT3.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\RemovedViolations-60012.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

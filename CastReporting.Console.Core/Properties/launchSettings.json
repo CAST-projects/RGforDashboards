@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://aed-tests-perf:8538/CAST-RESTAPI-integrated/rest/ -username cast -password cast -application \"cmsapi\" -domain \"cmsapi_ENGINEERING_WEBI\" -template \"C:\\ProgramData\\CAST\\ReportGenerator\\1.12.0\\Templates\\OWASP-2017-Top10 - Summary.docx\" -file \"D:\\temp\\CLITestsLib.docx\" -culture \"EN-en\""
+      "commandLineArgs": "-webservice http://localhost:8585/CAST-Health-Engineering/rest/ -username cast -password cast -application \"TstAppliJ2eeQuality\" -domain \"TST8316QA\" -template \"C:\\ProgramData\\CAST\\ReportGenerator\\1.12.0\\Templates\\3- Excel-components-library.xlsx\" -file \"D:\\temp\\CLITestsLib.xlsx\" -culture \"EN-en\""
     }
   }
 }

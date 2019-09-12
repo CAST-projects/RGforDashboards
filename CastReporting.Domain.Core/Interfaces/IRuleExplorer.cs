@@ -18,6 +18,13 @@ namespace CastReporting.Domain.Interfaces
         /// <returns></returns>
         RuleDescription GetSpecificRule(string domain, string ruleId);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        IEnumerable<StandardTag> GetQualityStandardTagsApplicabilityByCategory(string domain, string category);
 
         /// <summary>
         /// 
