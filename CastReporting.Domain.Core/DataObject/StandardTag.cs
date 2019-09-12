@@ -19,5 +19,10 @@ namespace CastReporting.Domain
 
         [DataMember(Name = "description")]
         public string Description { get; set; }
+
+
+        [DataMember(Name = "applicable")]
+        public string Applicable { get; set; }
+
     }
 }

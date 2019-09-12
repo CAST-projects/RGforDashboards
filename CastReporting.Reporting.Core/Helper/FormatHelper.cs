@@ -150,5 +150,10 @@ namespace CastReporting.Reporting.Helper
                 cellProps.Add(new CellAttributes(cellidx, colorBeige));
             }
         }
+
+        public static void AddGrayAndBold(List<CellAttributes> cellProps, int cellidx)
+        {
+            AddGrayOrBold(true, cellProps, cellidx, 0);
+        }
     }
 }
