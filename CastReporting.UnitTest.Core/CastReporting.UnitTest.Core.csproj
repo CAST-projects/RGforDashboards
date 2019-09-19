@@ -213,6 +213,9 @@
     <None Update="Data\DeltaComponents.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\DreamTeamSnap15MetricsCustom.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\DreamTeamSnap1Sample12.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -222,10 +225,16 @@
     <None Update="Data\DreamTeamSnap1Sample9.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\DreamTeamSnap3MetricsCustom.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\DreamTeamSnap4Metrics.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\DreamTeamSnap4Metrics2.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\DreamTeamSnap4Metrics2Previous.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Data\DreamTeamSnap4Sample10.json">
