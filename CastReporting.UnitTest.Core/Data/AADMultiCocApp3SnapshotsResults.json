@@ -50,7 +50,14 @@
         "result": {
           "value": 477
         },
-        "technologyResults": [],
+        "technologyResults": [
+          {
+            "technology": ".NET",
+            "result": {
+              "value": 477
+            }
+          }
+        ],
         "moduleResults": [],
         "transactionResults": []
       },
