@@ -133,6 +133,10 @@ namespace CastReporting.Reporting.Helper
                     return Color.Gray;
                 case "LightGrey":
                     return Color.LightGray;
+                case "MintCream":
+                    return Color.MintCream;
+                case "BlanchedAlmond":
+                    return Color.BlanchedAlmond;
             }
             return Color.White;
         }
@@ -154,6 +158,11 @@ namespace CastReporting.Reporting.Helper
         public static void AddGrayAndBold(List<CellAttributes> cellProps, int cellidx)
         {
             AddGrayOrBold(true, cellProps, cellidx, 0);
+        }
+
+        public static void AddColorsIfCondition(bool condition, List<CellAttributes> cellProps, int cellidx, string colorTrue, string colorFalse)
+        {
+            cellProps.Add(condition ? new CellAttributes(cellidx, colorTrue) : new CellAttributes(cellidx, colorFalse));
         }
     }
 }
