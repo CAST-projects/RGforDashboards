@@ -52,13 +52,17 @@ namespace CastReporting.Reporting.Block.Table
 	                List<StandardTag> tagsDoc = reportData.RuleExplorer.GetQualityStandardTagsApplicabilityByCategory(reportData.Application.DomainId, category).ToList();
 	                foreach (var doc in tagsDoc)
 	                {
-	                    var dataRow = headers.CreateDataRow();
+	                    bool isApplicable = doc.Applicable.Equals("true");
+                        var dataRow = headers.CreateDataRow();
 	                    dataRow.Set(Labels.Tag, doc.Key);
-	                    cellidx++;
+	                    FormatHelper.AddColorsIfCondition(isApplicable, cellProps, cellidx, "MintCream", "BlanchedAlmond");
+                        cellidx++;
 	                    dataRow.Set(Labels.Definition, doc.Name);
-	                    cellidx++;
-	                    dataRow.Set(Labels.Applicability, doc.Applicable.Equals("true") ? Labels.Applicable : Labels.NotApplicable);
-	                    cellidx++;
+	                    FormatHelper.AddColorsIfCondition(isApplicable, cellProps, cellidx, "MintCream", "BlanchedAlmond");
+                        cellidx++;
+	                    dataRow.Set(Labels.Applicability, isApplicable ? Labels.Applicable : Labels.NotApplicable);
+	                    FormatHelper.AddColorsIfCondition(isApplicable, cellProps, cellidx, "MintCream", "BlanchedAlmond");
+                        cellidx++;
 	                    data.AddRange(dataRow);
 	                }
 	            }

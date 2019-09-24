@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://dev-abd-tests:8539/CAST-Health-Engineering/rest/ -username cast -password cast -application \"Dream Team\" -domain \"ADG83\" -template \"Executive-summary.docx\" -file \"D:\\temp\\CLItest.docx\" -culture \"EN-en\""
+      "commandLineArgs": "-webservice http://abdlap2:8585/CAST-Health-Engineering/rest/ -username cast -password cast -application \"Dream Team\" -domain \"ADG8311\" -template \"D:\\GitHub\\NewSecuReports-1.12\\STIG V4R8 Compliance Report-applicability.docx\" -file \"D:\\temp\\CLItestApplicability.docx\" -culture \"EN-en\""
     }
   }
 }
