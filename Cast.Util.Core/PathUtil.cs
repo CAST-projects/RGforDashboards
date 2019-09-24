@@ -15,6 +15,7 @@
  */
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Cast.Util
 {
@@ -33,7 +34,7 @@ namespace Cast.Util
         /// </summary>
         public static string CreateTempCopy(string tempFolder, string templatePath)
         {
-            if (!string.IsNullOrEmpty(tempFolder) && !Directory.Exists(tempFolder)) 
+            if (!string.IsNullOrEmpty(tempFolder) && !Directory.Exists(tempFolder))
                 Directory.CreateDirectory(tempFolder);
 
             string tempName = $"~{Path.GetFileNameWithoutExtension(templatePath)}_{DateTime.Now:MMdd_HHmmss}{Path.GetExtension(templatePath)}";
@@ -60,6 +61,36 @@ namespace Cast.Util
 
         }
 
-       
+        public static string CreateTempCopy(string tempFolder, string templatePath, DirectoryInfo templatesRoot)
+        {
+            string subtemplatePath = GetTemplatePathInRoot(templatePath, templatesRoot);
+            return CreateTempCopy(tempFolder, subtemplatePath);
+        }
+
+        public static string CreateTempCopyFlexi(string tempFolder, string templatePath, DirectoryInfo templatesRoot)
+        {
+            string subtemplatePath = GetTemplatePathInRoot(templatePath, templatesRoot);
+            return CreateTempCopyFlexi(tempFolder, subtemplatePath);
+        }
+
+        private static string GetTemplatePathInRoot(string templatePath, DirectoryInfo templatesRoot)
+        {
+            FileInfo _templateFile = new FileInfo(templatePath);
+            if (_templateFile.Exists) return templatePath;
+            FileInfo _template = FindFileInFolderTree(_templateFile.Name, templatesRoot);
+            if (_template != null && _template.Exists)
+            {
+                return _template.FullName;
+            }
+            return templatePath;
+        }
+
+        private static FileInfo FindFileInFolderTree(string fileName, DirectoryInfo rootFolder)
+        {
+            FileInfo _file = rootFolder.GetFiles().ToList().FirstOrDefault(f => f.Name == fileName);
+            if (_file != null && _file.Exists) return _file;
+            return rootFolder.GetDirectories().Select(directoryInfo => FindFileInFolderTree(fileName, directoryInfo)).FirstOrDefault(subFile => subFile != null && subFile.Exists);
+        }
+
     }
 }

@@ -154,9 +154,7 @@ mkdir %WORK%\Logs
 if errorlevel 1 exit /b 1
 
 ::put the templates in the right places
-robocopy /njh /mir %REPORTINGDIR%\TemplatesFiles %WORK%\Templates
-if errorlevel 8 exit /b 1
-robocopy  /njh /mir %REPORTINGDIR%\PortfolioTemplatesFiles %WORK%\Templates\Portfolio
+robocopy /njh /mir %REPORTINGDIR%\Templates %WORK%\Templates
 if errorlevel 8 exit /b 1
 
 ::copy the settings file
