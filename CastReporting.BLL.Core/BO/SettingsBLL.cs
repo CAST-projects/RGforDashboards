@@ -36,17 +36,37 @@ namespace CastReporting.BLL
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<FileInfo> GetTemplateFileList()
+        public static List<FileSystemInfo> GetTemplateFileList()
         {
             using (ISettingRepository setttingRepository = new SettingsRepository())
             {
                 string templateFilePath = setttingRepository.GetSeting().ReportingParameter.TemplatePath;
-
-                return setttingRepository.GetTemplateFileList(templateFilePath);
+                ReportingParameter rp = new ReportingParameter();
+                return setttingRepository.GetTemplateFileList(templateFilePath + rp.ApplicationFolderNamePath);
             }
         }
 
-        public static bool GetCertificateValidationStrategy()
+        public static string GetApplicationTemplateRootPath()
+        {
+            using (ISettingRepository setttingRepository = new SettingsRepository())
+            {
+                string templateFilePath = setttingRepository.GetSeting().ReportingParameter.TemplatePath;
+                ReportingParameter rp = new ReportingParameter();
+                return templateFilePath + rp.ApplicationFolderNamePath;
+            }
+        }
+
+        public static string GetPortfolioTemplateRootPath()
+        {
+            using (ISettingRepository setttingRepository = new SettingsRepository())
+            {
+                string templateFilePath = setttingRepository.GetSeting().ReportingParameter.TemplatePath;
+                ReportingParameter rp = new ReportingParameter();
+                return templateFilePath + rp.PortfolioFolderNamePath;
+            }
+        }
+    
+    public static bool GetCertificateValidationStrategy()
         {
             using (ISettingRepository setttingRepository = new SettingsRepository())
             {
@@ -60,7 +80,7 @@ namespace CastReporting.BLL
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<FileInfo> GetTemplateFileListPortfolio()
+        public static List<FileSystemInfo> GetTemplateFileListPortfolio()
         {
             using (ISettingRepository setttingRepository = new SettingsRepository())
             {

@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://dev-abd-tests:8539/CAST-Health-Engineering/rest/ -username cast -password cast -application \"Dream Team\" -domain \"ADG83\" -template \"D:\\GitHub\\RGforDashboard\\RGforDashboards\\CastReporting.Reporting.Core\\TemplatesFiles\\3- Excel-components-library.xlsx\" -file \"D:\\temp\\CLIlib.xlsx\" -culture \"EN-en\""
+      "commandLineArgs": "-webservice http://dev-abd-tests:8539/CAST-Health-Engineering/rest/ -username cast -password cast -application \"Dream Team\" -domain \"ADG83\" -template \"Executive-summary.docx\" -file \"D:\\temp\\CLItest.docx\" -culture \"EN-en\""
     }
   }
 }

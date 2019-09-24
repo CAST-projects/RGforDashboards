@@ -266,10 +266,11 @@ namespace CastReporting.Console
                         {
 
                             //Create temporary report
-                            tmpReportFile = PathUtil.CreateTempCopy(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, "Portfolio", arguments.Template.Name));
+                            DirectoryInfo templatesRoot = new DirectoryInfo(settings.ReportingParameter.TemplatePath);
+                            tmpReportFile = PathUtil.CreateTempCopy(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, "Portfolio", arguments.Template.Name), templatesRoot);
                             if (tmpReportFile.Contains(".xlsx"))
                             {
-                                tmpReportFileFlexi = PathUtil.CreateTempCopyFlexi(workDirectory, arguments.Template.Name);
+                                tmpReportFileFlexi = PathUtil.CreateTempCopyFlexi(workDirectory, arguments.Template.Name, templatesRoot);
                             }
                             //Build report
                             ReportData reportData;
@@ -419,10 +420,11 @@ namespace CastReporting.Console
 
                     //Initialize temporary directory
                     string workDirectory = SettingsBLL.GetApplicationPath();
-                    tmpReportFile = PathUtil.CreateTempCopy(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, arguments.Template.Name));
+                    DirectoryInfo templatesRoot = new DirectoryInfo(settings.ReportingParameter.TemplatePath);
+                    tmpReportFile = PathUtil.CreateTempCopy(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, arguments.Template.Name), templatesRoot);
                     if (tmpReportFile.Contains(".xlsx"))
                     {
-                        tmpReportFileFlexi = PathUtil.CreateTempCopyFlexi(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, arguments.Template.Name));
+                        tmpReportFileFlexi = PathUtil.CreateTempCopyFlexi(workDirectory, Path.Combine(settings.ReportingParameter.TemplatePath, arguments.Template.Name), templatesRoot);
                     }
                     //Initialize Web services
 
