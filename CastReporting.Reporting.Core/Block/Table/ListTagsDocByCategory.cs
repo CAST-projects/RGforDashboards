@@ -21,7 +21,7 @@ namespace CastReporting.Reporting.Block.Table
 	        int cellidx = 0;
 
 	        var headers = new HeaderDefinition();
-	        headers.Append(Labels.Tag);
+	        headers.Append(Labels.Standards);
 	        cellidx++;
 	        headers.Append(Labels.Definition);
 	        cellidx++;
@@ -38,7 +38,7 @@ namespace CastReporting.Reporting.Block.Table
 	                if (moreThanOne)
 	                {
 	                    var dataRowCat = headers.CreateDataRow();
-	                    dataRowCat.Set(Labels.Tag, category);
+	                    dataRowCat.Set(Labels.Standards, category);
 	                    FormatHelper.AddGrayAndBold(cellProps, cellidx);
 	                    cellidx++;
 	                    dataRowCat.Set(Labels.Definition, "");
@@ -54,7 +54,7 @@ namespace CastReporting.Reporting.Block.Table
 	                {
 	                    bool isApplicable = doc.Applicable.Equals("true");
                         var dataRow = headers.CreateDataRow();
-	                    dataRow.Set(Labels.Tag, doc.Key);
+	                    dataRow.Set(Labels.Standards, doc.Key);
 	                    FormatHelper.AddColorsIfCondition(isApplicable, cellProps, cellidx, "MintCream", "BlanchedAlmond");
                         cellidx++;
 	                    dataRow.Set(Labels.Definition, doc.Name);
@@ -71,7 +71,7 @@ namespace CastReporting.Reporting.Block.Table
 	        if (data.Count == 0)
 	        {
 	            var dataRow = headers.CreateDataRow();
-	            dataRow.Set(Labels.Tag, Labels.NoRules);
+	            dataRow.Set(Labels.Standards, Labels.NoRules);
 	            dataRow.Set(Labels.Definition, string.Empty);
 	            dataRow.Set(Labels.Applicability, string.Empty);
 	            data.AddRange(dataRow);
