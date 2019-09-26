@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="TemplatesFiles\" />
+    <Compile Remove="TemplatesFiles\**" />
+    <EmbeddedResource Remove="TemplatesFiles\**" />
+    <None Remove="TemplatesFiles\**" />
   </ItemGroup>
 
   <ItemGroup>
