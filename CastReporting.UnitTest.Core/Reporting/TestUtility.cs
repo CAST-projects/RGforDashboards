@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using CastReporting.Domain;
@@ -11,6 +12,7 @@ using CastReporting.Reporting.Core.Languages;
 using CastReporting.Reporting.ReportingModel;
 using CastReporting.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Module = CastReporting.Domain.Module;
 
 namespace CastReporting.UnitTest.Reporting
 {
@@ -86,7 +88,7 @@ namespace CastReporting.UnitTest.Reporting
             {
                 Parameter = new ReportingParameter(),
                 CurrencySymbol = "$",
-                ServerVersion = "1.9.0.457"
+                ServerVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString()
             };
 
             if (currentJson == null) return null;
