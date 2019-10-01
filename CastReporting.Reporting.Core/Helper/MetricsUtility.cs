@@ -6,7 +6,6 @@ using System.Data;
 using System.Linq;
 using Cast.Util.Log;
 using CastReporting.Reporting.ReportingModel;
-using CastReporting.Reporting.Helper;
 using CastReporting.Reporting.Core.Languages;
 
 namespace CastReporting.Reporting.Helper
@@ -605,21 +604,21 @@ namespace CastReporting.Reporting.Helper
                 violationCounter++;
                 rowData.Add("");
                 cellidx++;
-                rowData.Add(Labels.Violation + " #" + violationCounter + "    " + ruleName);
+                rowData.Add($"{Labels.Violation} #{violationCounter}    {ruleName}");
                 cellProps.Add(new CellAttributes(cellidx, ColorGainsboro));
                 cellidx++;
-                rowData.Add(Labels.ObjectName + ": " + _violation.Component.Name);
+                rowData.Add($"{Labels.ObjectName}: {_violation.Component.Name}");
                 cellProps.Add(new CellAttributes(cellidx, ColorWhite));
                 cellidx++;
 
                 TypedComponent objectComponent = reportData.SnapshotExplorer.GetTypedComponent(reportData.CurrentSnapshot.DomainId, _violation.Component.GetComponentId(), reportData.CurrentSnapshot.GetId());
-                rowData.Add(Labels.IFPUG_ObjectType + ": " + objectComponent.Type.Label);
+                rowData.Add($"{Labels.IFPUG_ObjectType}: {objectComponent.Type.Label}");
                 cellProps.Add(new CellAttributes(cellidx, ColorWhite));
                 cellidx++;
 
                 if (hasPreviousSnapshot)
                 {
-                    rowData.Add(Labels.Status + ": " + _violation.Diagnosis.Status);
+                    rowData.Add($"{Labels.Status}: {_violation.Diagnosis.Status}");
                     cellProps.Add(new CellAttributes(cellidx, ColorWhite));
                     cellidx++;
                 }
@@ -632,7 +631,7 @@ namespace CastReporting.Reporting.Helper
                     if (associatedValue.Values != null && associatedValue.Values.Length > 0)
                     {
                         var value = associatedValue.Values[0];
-                        rowData.Add(Labels.AssociatedValue + ": " + value);
+                        rowData.Add($"{Labels.AssociatedValue}: {value}");
                         cellProps.Add(new CellAttributes(cellidx, ColorWhite));
                         cellidx++;
                     }
@@ -648,14 +647,14 @@ namespace CastReporting.Reporting.Helper
                             IEnumerable<CodeBookmark> _bookmarks = _codeBookmarks.ToList();
                             foreach (CodeBookmark _bookmark in _bookmarks)
                             {
-                                rowData.Add(Labels.FilePath + ": " + _bookmark.CodeFragment.CodeFile.Name);
+                                rowData.Add($"{Labels.FilePath}: {_bookmark.CodeFragment.CodeFile.Name}");
                                 cellProps.Add(new CellAttributes(cellidx, ColorLavander));
                                 cellidx++;
                                 Dictionary<int, string> codeLines = reportData.SnapshotExplorer.GetSourceCodeBookmark(domainId, _bookmark, 3);
                                 if (codeLines == null) continue;
                                 foreach (KeyValuePair<int, string> codeLine in codeLines)
                                 {
-                                    rowData.Add(codeLine.Key + " : " + codeLine.Value);
+                                    rowData.Add($"{codeLine.Key} : {codeLine.Value}");
                                     cellProps.Add(codeLine.Key >= _bookmark.CodeFragment.StartLine && codeLine.Key <= _bookmark.CodeFragment.EndLine
                                         ? new CellAttributes(cellidx, ColorLightYellow)
                                         : new CellAttributes(cellidx, ColorWhite));
@@ -682,7 +681,7 @@ namespace CastReporting.Reporting.Helper
                         {
                             pathCounter++;
                             IEnumerable<CodeBookmark> _bookmarksValue = _value.ToList();
-                            rowData.Add(Labels.ViolationPath + " #" + pathCounter);
+                            rowData.Add($"{Labels.ViolationPath} #{pathCounter}");
                             cellProps.Add(new CellAttributes(cellidx, ColorLavander));
                             cellidx++;
                             string previousFile = string.Empty;
@@ -691,7 +690,7 @@ namespace CastReporting.Reporting.Helper
                                 if (string.IsNullOrEmpty(previousFile) || !previousFile.Equals(_bookval.CodeFragment.CodeFile.Name))
                                 {
                                     previousFile = _bookval.CodeFragment.CodeFile.Name;
-                                    rowData.Add(Labels.FilePath + ": " + _bookval.CodeFragment.CodeFile.Name);
+                                    rowData.Add($"{Labels.FilePath}: {_bookval.CodeFragment.CodeFile.Name}");
                                     cellProps.Add(new CellAttributes(cellidx, ColorWhite));
                                     cellidx++;
                                 }
@@ -700,7 +699,7 @@ namespace CastReporting.Reporting.Helper
 
                                 foreach (KeyValuePair<int, string> codeLine in codeLines)
                                 {
-                                    rowData.Add(codeLine.Key + " : " + codeLine.Value);
+                                    rowData.Add($"{codeLine.Key} : {codeLine.Value}");
                                     cellProps.Add(codeLine.Key == _bookval.CodeFragment.StartLine
                                         ? new CellAttributes(cellidx, ColorLightYellow)
                                         : new CellAttributes(cellidx, ColorWhite));
@@ -753,7 +752,7 @@ namespace CastReporting.Reporting.Helper
 
             foreach (Tuple<string, Dictionary<int, string>> _code in codes)
             {
-                rowData.Add(Labels.FilePath + ": " + _code.Item1);
+                rowData.Add($"{Labels.FilePath}: {_code.Item1}");
                 cellProps.Add(new CellAttributes(cellidx, ColorLavander));
                 cellidx++;
 
@@ -761,7 +760,7 @@ namespace CastReporting.Reporting.Helper
                 if (codeLines == null) return cellidx;
                 foreach (KeyValuePair<int, string> codeLine in codeLines)
                 {
-                    rowData.Add(codeLine.Key + " : " + codeLine.Value);
+                    rowData.Add($"{codeLine.Key} : {codeLine.Value}");
                     cellProps.Add(new CellAttributes(cellidx, ColorWhite));
                     cellidx++;
                 }
