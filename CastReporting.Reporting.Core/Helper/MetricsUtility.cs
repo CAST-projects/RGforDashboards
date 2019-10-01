@@ -9,7 +9,7 @@ using CastReporting.Reporting.ReportingModel;
 using CastReporting.Reporting.Helper;
 using CastReporting.Reporting.Core.Languages;
 
-namespace CastReporting.Reporting
+namespace CastReporting.Reporting.Helper
 {
     public static class MetricsUtility
     {
