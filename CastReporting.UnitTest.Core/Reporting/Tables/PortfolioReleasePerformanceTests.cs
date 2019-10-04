@@ -372,7 +372,7 @@ namespace CastReporting.UnitTest.Reporting.Tables
             _snap0.Annotation.Date = _date0;
 
             Snapshot _snap1 = reportData.Applications[0].Snapshots.ElementAt(1);
-            TimeSpan time1 = DateTime.Now.AddHours(-12) - date;
+            TimeSpan time1 = DateTime.Now.AddHours(-5) - date;
             CastDate _date1 = new CastDate { Time = time1.TotalMilliseconds };
             if (_snap1 == null) Assert.Fail();
             _snap1.Annotation.Date = _date1;
