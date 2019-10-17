@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://dev-abd-tests:8539/CAST-Health-Engineering/rest/ -username cast -password cast -application \"cmsapi\" -domain \"6bc347f7-2bc3-4347-9574-867871be395a\" -template \"STIG V4R8 Compliance Report.docx\" -file \"D:\\temp\\CLItestSTIG.docx\" -culture \"EN-en\""
+      "commandLineArgs": "-webservice http://aed-centos-tests:8080/CAST-HE-integrated/rest/ -username cast -password cast -application \"WebGoat_Jee\" -domain \"fedb147c-dc59-4262-8e73-eea5af915334\" -template \"关键违规报告.docx\" -file \"D:\\temp\\zhcnCLIWebgoattest.docx\" -culture \"zh-CN\""
     }
   }
 }
