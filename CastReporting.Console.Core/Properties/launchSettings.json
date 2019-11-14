@@ -2,7 +2,7 @@
   "profiles": {
     "CastReporting.Console.Core": {
       "commandName": "Project",
-      "commandLineArgs": "-webservice http://aed-centos-tests:8080/CAST-HE-integrated/rest/ -username cast -password cast -application \"WebGoat_Jee\" -domain \"fedb147c-dc59-4262-8e73-eea5af915334\" -template \"关键违规报告.docx\" -file \"D:\\temp\\zhcnCLIWebgoattest.docx\" -culture \"zh-CN\""
+      "commandLineArgs": "-webservice https://audit.castsoftware.com/CAST-Health-Engineering/rest/ -username Dashadmin -password jeT4$}G(vz=SA&JO7hFN -application \"eCommerce\" -domain \"AED1\" -template \"C:\\_Dev\\ReportGenerator\\RGforDashboards\\CastReporting.Reporting.Core\\Templates\\CISQ Compliance Report.docx\" -file \"C:\\_Temp\\CLIsecuaudit.docx\""
     }
   }
 }
