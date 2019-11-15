@@ -872,7 +872,7 @@ namespace CastReporting.Reporting.Helper
             DataTable dt = new DataTable();
             try
             {
-                double? res = double.Parse(dt.Compute(expr, "").ToString());
+                double? res = double.Parse(dt.Compute(expr, "").ToString(), System.Globalization.CultureInfo.CurrentCulture);
                 return res.Value.Equals(double.NaN) ? Labels.NoData : res.Value.ToString(metricFormat);
             }
             catch (EvaluateException e)
@@ -888,7 +888,7 @@ namespace CastReporting.Reporting.Helper
             DataTable dt = new DataTable();
             try
             {
-                return double.Parse(dt.Compute(expr, "").ToString());
+                return double.Parse(dt.Compute(expr, "").ToString(), System.Globalization.CultureInfo.CurrentCulture);
             }
             catch (EvaluateException e)
             {
