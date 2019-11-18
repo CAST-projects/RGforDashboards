@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
@@ -20,6 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="System.IO.Packaging" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Cast.Util.Core\Cast.Util.Core.csproj" />
     <ProjectReference Include="..\CastReporting.BLL.Core\CastReporting.BLL.Core.csproj" />
     <ProjectReference Include="..\CastReporting.Domain.Core\CastReporting.Domain.Core.csproj" />
@@ -27,9 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\packages\log4net\2.0.8\lib\netstandard1.3\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Office.Interop.PowerPoint">
       <HintPath>..\packages\Office15\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
     </Reference>
@@ -38,9 +40,6 @@
     </Reference>
     <Reference Include="office">
       <HintPath>..\packages\Office15\Office.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Packaging">
-      <HintPath>..\packages\System.IO.Packaging.4.5.0\lib\netstandard2.0\System.IO.Packaging.dll</HintPath>
     </Reference>
   </ItemGroup>
 

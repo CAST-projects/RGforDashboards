@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ApplicationIcon />
+    <OutputType>WinExe</OutputType>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\*.png" />
+    <None Remove="Resources\Images\*.ico" />
+    <None Remove="Resources\Images\*.gif" />
+    <None Remove="Resources\Images\*.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\*.png" />
+    <Resource Include="Resources\Images\*.ico" />
+    <Resource Include="Resources\Images\*.gif" />
+    <Resource Include="Resources\Images\*.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Resources\ComboBoxResources.xaml" />
+    <Page Remove="Resources\CommonResources.xaml" />
+    <Page Remove="Resources\ListBoxResources.xaml" />
+    <Page Remove="Resources\Themes\ButtonStyles.xaml" />
+    <Page Remove="Resources\Themes\MetroWindowResources.xaml" />
+    <Page Remove="Resources\Themes\Resources.xaml" />
+    <Page Remove="Resources\TreeViewResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\ComboBoxResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\CommonResources.xaml" />
+    <Resource Include="Resources\ListBoxResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Themes\ButtonStyles.xaml" />
+    <Resource Include="Resources\Themes\MetroWindowResources.xaml" />
+    <Resource Include="Resources\Themes\Resources.xaml" />
+    <Resource Include="Resources\TreeViewResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Expression.Interaction" Version="3.0.40218" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.0.0" />
+    <PackageReference Include="PresentationFramework" Version="4.6.0" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cast.Util.Core\Cast.Util.Core.csproj" />
+    <ProjectReference Include="..\CastReporting.BLL.Core\CastReporting.BLL.Core.csproj" />
+    <ProjectReference Include="..\CastReporting.Domain.Core\CastReporting.Domain.Core.csproj" />
+    <ProjectReference Include="..\CastReporting.Reporting.Core\CastReporting.Reporting.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.PowerPoint">
+      <HintPath>..\packages\Office15\Microsoft.Office.Interop.PowerPoint.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word">
+      <HintPath>..\packages\Office15\Microsoft.Office.Interop.Word.dll</HintPath>
+    </Reference>
+    <Reference Include="office">
+      <HintPath>..\packages\Office15\Office.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Languages\Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Languages\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  
+</Project>
