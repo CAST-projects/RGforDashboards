@@ -66,6 +66,7 @@ set INNODIR=%WORKSPACE%\InnoSetup5
 
 set VERSION=1.12.1
 set ID=com.castsoftware.aip.reportgenerator
+set ID2=com.castsoftware.aip.reportgeneratorfordashboard
 
 for /f "delims=. tokens=1,2" %%a in ('echo %VERSION%') do set SHORT_VERSION=%%a.%%b
 echo.
@@ -105,6 +106,21 @@ pushd %RESDIR%
 for /f "delims=/" %%a in ('cd') do set RESDIR=%%a
 popd
 
+set RESDIRRG=%RESDIR%\ReportGenerator
+mkdir %RESDIRRG%
+if errorlevel 1 goto endclean
+pushd %RESDIRRG%
+for /f "delims=/" %%a in ('cd') do set RESDIRRG=%%a
+popd
+
+set RESDIRRGFD=%RESDIR%\ReportGeneratorForDashboard
+mkdir %RESDIRRGFD%
+if errorlevel 1 goto endclean
+pushd %RESDIRRGFD%
+for /f "delims=/" %%a in ('cd') do set RESDIRRGFD=%%a
+popd
+
+
 cd %SRCDIR%
 echo.
 echo ==============================================
@@ -126,6 +142,7 @@ if errorlevel 1 (
 	echo ERROR: Tests compilation failed
 	goto endclean
 )
+
 
 echo.
 echo ==============================================
@@ -153,39 +170,131 @@ echo.
 echo ==============================================
 echo copying component
 echo ==============================================
-set COMPONENTPATH=%RESDIR%\%ID%.%VERSION%.exe
+set COMPONENTPATH=%RESDIRRG%\%ID%.%VERSION%.exe
 copy /y %SETUPPATH% %COMPONENTPATH%
 if errorlevel 1 goto endclean
 
 echo.
-echo Package path is: %COMPONENTPATH%
+echo Package path for ReportGenerator is: %COMPONENTPATH%
 
 pushd %WORKSPACE%
 echo.
 echo ==============================================
-echo Nuget packaging ...
+echo Preparing package for Report Generator for Dashboard ...
 echo ==============================================
-xcopy /f /y %SRCDIR%\_build\plugin.nuspec %RESDIR%
+pushd %WORKSPACE%
+set REPORTINGDIR=%SRCDIR%/CastReporting.Reporting.Core
+set CONSOLEDIR=%SRCDIR%/CastReporting.Console.Core/bin/Release/netcoreapp3.0
+
+robocopy /njh /s %CONSOLEDIR% %WORK% *.dll
+if errorlevel 8 exit /b 1
+robocopy /njh %CONSOLEDIR% %WORK% *.config CastReporting.Console.Core.runtimeconfig.json CastReporting.Console.Core.deps.json
+if errorlevel 8 exit /b 1
+robocopy /njh %CONSOLEDIR%\Parameters %WORK%\Parameters Parameters.xml
+if errorlevel 8 exit /b 1
+
+::create the log folder
+mkdir %WORK%\Logs
+if errorlevel 1 exit /b 1
+
+::put the templates in the right places
+robocopy /njh /mir %REPORTINGDIR%\Templates %WORK%\Templates
+if errorlevel 8 exit /b 1
+
+::copy the settings file
+robocopy /njh %SRCDIR%\CastReporting.Repositories.Core %WORK% CastReportingSetting.xml
+if errorlevel 8 exit /b 1
+robocopy %SRCDIR%\_build %WORK% License.rtf
+if errorlevel 8 exit /b 1
+
+set ZIPPATH=%RESDIRRGFD%\%ID%.%VERSION%.zip
+pushd %WORK%
+7z.exe a -y -r %ZIPPATH% .
 if errorlevel 1 goto endclean
 
-sed -i 's/_THE_VERSION_/%VERSION%/' %RESDIR%/plugin.nuspec
+echo.
+echo Package path for ReportGeneratorForDashboard is: %ZIPPATH%
+
+pushd %WORKSPACE%
+echo.
+echo ==============================================
+echo Nuget packaging ReportGeneratorForDashboard...
+echo ==============================================
+echo F|xcopy /f /y %SRCDIR%\_build\plugin_for_dashboard.nuspec %RESDIRRGFD%\plugin.nuspec
 if errorlevel 1 goto endclean
-sed -i 's/_THE_SHORT_VERSION_/%SHORT_VERSION%/' %RESDIR%/plugin.nuspec
+
+sed -i 's/_THE_VERSION_/%VERSION%/' %RESDIRRGFD%/plugin.nuspec
 if errorlevel 1 goto endclean
-sed -i 's/_THE_ID_/%ID%/' %RESDIR%/plugin.nuspec
+sed -i 's/_THE_SHORT_VERSION_/%SHORT_VERSION%/' %RESDIRRGFD%/plugin.nuspec
+if errorlevel 1 goto endclean
+sed -i 's/_THE_ID_/%ID%/' %RESDIRRGFD%/plugin.nuspec
 if errorlevel 1 goto endclean
 
 cd %WORKSPACE%
-set CMD=%BUILDDIR%\nuget_package_basics.bat outdir=%RESDIR% pkgdir=%RESDIR% buildno=%BUILDNO% nopub=%NOPUB% is_component=true
+set CMD=%BUILDDIR%\nuget_package_basics.bat outdir=%RESDIRRGFD% pkgdir=%RESDIRRGFD% buildno=%BUILDNO% nopub=%NOPUB% is_component=true
 echo Executing command:
 echo %CMD%
 call %CMD%
 if errorlevel 1 goto endclean
 
-for /f "tokens=*" %%a in ('dir /b %RESDIR%\com.castsoftware.*.nupkg') do set PACKPATH=%RESDIR%\%%a
+for /f "tokens=*" %%a in ('dir /b %RESDIRRGFD%\com.castsoftware.*.nupkg') do set PACKPATHFD=%RESDIRRGFD%\%%a
+if not defined PACKPATHFD (
+	echo .
+	echo ERROR: No package was created : file not found %RESDIRRGFD%\com.castsoftware.*.nupkg ...
+	goto endclean
+)
+if not exist %PACKPATHFD% (
+	echo .
+	echo ERROR: File not found %PACKPATHFD% ...
+	goto endclean
+)
+
+set GROOVYEXE=groovy
+%GROOVYEXE% --version 2>nul
+if errorlevel 1 set GROOVYEXE="%GROOVY_HOME%\bin\groovy"
+%GROOVYEXE% --version 2>nul
+if errorlevel 1 (
+	echo ERROR: no groovy executable available, need one!
+	goto endclean
+)
+
+:: ========================================================================================
+:: Nuget checking reportgeneratorfordashboard
+:: ========================================================================================
+set CMD=%GROOVYEXE% %BUILDDIR%\nuget_package_verification.groovy --packpath=%PACKPATHFD%
+echo Executing command:
+echo %CMD%
+call %CMD%
+if errorlevel 1 goto endclean
+
+echo End of build with success.
+set RETCODE=0
+
+echo.
+echo ==============================================
+echo Nuget packaging ReportGenerator...
+echo ==============================================
+xcopy /f /y %SRCDIR%\_build\plugin.nuspec %RESDIRRG%
+if errorlevel 1 goto endclean
+
+sed -i 's/_THE_VERSION_/%VERSION%/' %RESDIRRG%/plugin.nuspec
+if errorlevel 1 goto endclean
+sed -i 's/_THE_SHORT_VERSION_/%SHORT_VERSION%/' %RESDIRRG%/plugin.nuspec
+if errorlevel 1 goto endclean
+sed -i 's/_THE_ID_/%ID%/' %RESDIRRG%/plugin.nuspec
+if errorlevel 1 goto endclean
+
+cd %WORKSPACE%
+set CMD=%BUILDDIR%\nuget_package_basics.bat outdir=%RESDIRRG% pkgdir=%RESDIRRG% buildno=%BUILDNO% nopub=%NOPUB% is_component=true
+echo Executing command:
+echo %CMD%
+call %CMD%
+if errorlevel 1 goto endclean
+
+for /f "tokens=*" %%a in ('dir /b %RESDIRRG%\com.castsoftware.*.nupkg') do set PACKPATH=%RESDIRRG%\%%a
 if not defined PACKPATH (
 	echo .
-	echo ERROR: No package was created : file not found %RESDIR%\com.castsoftware.*.nupkg ...
+	echo ERROR: No package was created : file not found %RESDIRRG%\com.castsoftware.*.nupkg ...
 	goto endclean
 )
 if not exist %PACKPATH% (
@@ -204,7 +313,7 @@ if errorlevel 1 (
 )
 
 :: ========================================================================================
-:: Nuget checking
+:: Nuget checking ReportGenerator
 :: ========================================================================================
 set CMD=%GROOVYEXE% %BUILDDIR%\nuget_package_verification.groovy --packpath=%PACKPATH%
 echo Executing command:
