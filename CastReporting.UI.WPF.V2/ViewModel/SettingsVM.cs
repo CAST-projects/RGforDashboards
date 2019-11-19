@@ -210,7 +210,7 @@ namespace CastReporting.UI.WPF.Core.ViewModel
                     
                 }
                 
-                if (previousCulture.Equals("zh-CN"))
+                if (previousCulture != null && previousCulture.Equals("zh-CN"))
                 {
                     string previousTemplatePath = Setting.ReportingParameter.TemplatePath;
                     int idxToKeep = previousTemplatePath.Length - "\\zh-CN".Length;

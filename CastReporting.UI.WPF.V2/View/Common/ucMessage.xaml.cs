@@ -17,6 +17,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -85,10 +86,14 @@ namespace CastReporting.UI.WPF.Core.Common
         /// <param name="e"></param>
         private void OpenButtonClicked(object sender, RoutedEventArgs e)
         {
-
-            var fileName = ((e.Source as Button)?.DataContext as MessageItem)?.FileName;
-
-            if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))  Process.Start(fileName);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                var fileName = ((e.Source as Button)?.DataContext as MessageItem)?.FileName;
+                if (!string.IsNullOrEmpty(fileName) && File.Exists(fileName))
+                {
+                    Process.Start(new ProcessStartInfo(fileName) { UseShellExecute = true });
+                }
+            }
         }
 
 

@@ -987,8 +987,8 @@ namespace CastReporting.UI.WPF.Core.ViewModel
             {
                 using (CastDomainBLL castDomainBLL = new CastDomainBLL(ActiveConnection))
                 {
-                    Applications = castDomainBLL.GetApplications().Select(app => new ApplicationItem(app));
-                    List<CastDomain> domains = castDomainBLL.GetDomains().ToList();
+                    Applications = castDomainBLL.GetApplications()?.Select(app => new ApplicationItem(app));
+                    List<CastDomain> domains = castDomainBLL.GetDomains()?.ToList();
                     foreach (CastDomain domain in domains)
                     {
                         if (domain.DBType.Equals("AAD")) Categories = castDomainBLL.GetCategories();

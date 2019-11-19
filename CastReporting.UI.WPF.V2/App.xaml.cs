@@ -24,7 +24,7 @@ using System.Net;
 using System.Threading;
 using System.Windows;
 using CastReporting.UI.WPF.Core.Common;
-
+using System.IO;
 
 namespace CastReporting.UI.WPF.Core
 {
@@ -42,7 +42,7 @@ namespace CastReporting.UI.WPF.Core
 #if !DEBUG
             DispatcherUnhandledException += OnDispatcherUnhandledException;         
 #endif            
-            LogHelper.SetPathLog(SettingsBLL.GetApplicationPath());
+            LogHelper.SetPathLog(Path.Combine(SettingsBLL.GetApplicationPath(), "Logs"));
 
             if (string.IsNullOrEmpty(ViewModelBase.Setting.ReportingParameter.CultureName)) return;
             CultureInfo cultureInfo = CultureInfo.GetCultureInfo(ViewModelBase.Setting.ReportingParameter.CultureName);

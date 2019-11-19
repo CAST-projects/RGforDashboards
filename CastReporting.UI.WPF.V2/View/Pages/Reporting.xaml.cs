@@ -26,6 +26,7 @@ using Cast.Util.Log;
 using CastReporting.BLL;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using TreeView = System.Windows.Controls.TreeView;
+using System.Runtime.InteropServices;
 
 namespace CastReporting.UI.WPF.Core.View
 {
@@ -190,9 +191,9 @@ namespace CastReporting.UI.WPF.Core.View
         {
             TreeViewItem selectedTreeViewItem = (TreeViewItem)TrvStructure.SelectedItem;
             FileInfo selectedFileInfo = new FileInfo(selectedTreeViewItem.Tag.ToString());
-            if (selectedFileInfo.Exists)
+            if (selectedFileInfo.Exists && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Process.Start(selectedFileInfo.FullName);
+                Process.Start(new ProcessStartInfo(selectedFileInfo.FullName) { UseShellExecute = true });
             }
         }
 
