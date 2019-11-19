@@ -35,7 +35,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             var table = component.Content(reportData, config);
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { null, "V-1.5.0_Sprint 2_2" });
-            expectedData.AddRange(new List<string> { "TQI", "2.7781377635159" });
+            expectedData.AddRange(new List<string> { "TQI", "2.7781377635159017" });
             TestUtility.AssertTableContent(table, expectedData, 2, 2);
 
         }
@@ -63,7 +63,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             var table = component.Content(reportData, config);
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { null, "V-1.4.1" });
-            expectedData.AddRange(new List<string> { "TQI", "2.60905438431695" });
+            expectedData.AddRange(new List<string> { "TQI", "2.6090543843169525" });
             TestUtility.AssertTableContent(table, expectedData, 2, 2);
 
         }
@@ -91,7 +91,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             var table = component.Content(reportData, config);
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { null, "V-1.5.0_Sprint 2_2", "V-1.4.1" });
-            expectedData.AddRange(new List<string> { "TQI", "2.7781377635159", "2.60905438431695" });
+            expectedData.AddRange(new List<string> { "TQI", "2.7781377635159017", "2.6090543843169525" });
             TestUtility.AssertTableContent(table, expectedData, 3, 2);
 
         }
@@ -118,7 +118,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             var table = component.Content(reportData, config);
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { null, "V-1.5.0_Sprint 2_2", "V-1.4.1" });
-            expectedData.AddRange(new List<string> { "TQI", "2.7781377635159", "2.60905438431695" });
+            expectedData.AddRange(new List<string> { "TQI", "2.7781377635159017", "2.6090543843169525" });
             TestUtility.AssertTableContent(table, expectedData, 3, 2);
 
         }
@@ -146,7 +146,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             var table = component.Content(reportData, config);
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { null, "v1.1.4" });
-            expectedData.AddRange(new List<string> { "Trsf", "3.11741064909927" });
+            expectedData.AddRange(new List<string> { "Trsf", "3.117410649099272" });
             TestUtility.AssertTableContent(table, expectedData, 2, 2);
 
         }
@@ -174,7 +174,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             var table = component.Content(reportData, config);
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { null, "v1.1.4" });
-            expectedData.AddRange(new List<string> { "Documentation - Bad Comments", "3.65239043824701" });
+            expectedData.AddRange(new List<string> { "Documentation - Bad Comments", "3.6523904382470107" });
             TestUtility.AssertTableContent(table, expectedData, 2, 2);
 
         }

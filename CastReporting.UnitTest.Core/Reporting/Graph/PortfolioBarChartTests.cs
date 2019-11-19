@@ -44,8 +44,8 @@ namespace CastReporting.UnitTest.Reporting.Graph
 
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { " ", "Efficiency" });
-            expectedData.AddRange(new List<string> { "AppliAEPtran", "1.8780487804878" });
-            expectedData.AddRange(new List<string> { "Big Ben", "1.32464620041293" });
+            expectedData.AddRange(new List<string> { "AppliAEPtran", "1.8780487804878048" });
+            expectedData.AddRange(new List<string> { "Big Ben", "1.3246462004129334" });
             TestUtility.AssertTableContent(table, expectedData, 2, 3);
         }
 
@@ -78,8 +78,8 @@ namespace CastReporting.UnitTest.Reporting.Graph
 
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { " ", "Architecture - OS and Platform Independence" });
-            expectedData.AddRange(new List<string> { "AppliAEPtran", "3.94396369907646" });
-            expectedData.AddRange(new List<string> { "Big Ben", "3.49944922722343" });
+            expectedData.AddRange(new List<string> { "AppliAEPtran", "3.9439636990764604" });
+            expectedData.AddRange(new List<string> { "Big Ben", "3.499449227223427" });
             TestUtility.AssertTableContent(table, expectedData, 2, 3);
         }
 
@@ -112,7 +112,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
 
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { " ", "Avoid Tables with more than 20 columns on an OLTP system (7856)" });
-            expectedData.AddRange(new List<string> { "AppliAEPtran", "2.88888888888889" });
+            expectedData.AddRange(new List<string> { "AppliAEPtran", "2.8888888888888884" });
             TestUtility.AssertTableContent(table, expectedData, 2, 2);
         }
 

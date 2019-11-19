@@ -64,7 +64,7 @@ namespace CastReporting.UnitTest.Reporting.Tables
 
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { "Name", "Current", "Previous", "% Evolution" });
-            expectedData.AddRange(new List<string> { "Critical Violations", "1,411", "680", "+108 %" });
+            expectedData.AddRange(new List<string> { "Critical Violations", "1,411", "680", "+107 %" });
             expectedData.AddRange(new List<string> { "  per File", "n/a", "n/a", "n/a" });
             expectedData.AddRange(new List<string> { "  per kLoC", "0.91", "10.89", "-91.6 %" });
             expectedData.AddRange(new List<string> { "Complex Objects", "243", "238", "+2.10 %" });

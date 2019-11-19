@@ -32,7 +32,7 @@ namespace CastReporting.UnitTest.Reporting.Tables
 
             var expectedData = new List<string>();
             expectedData.AddRange(new List<string> { "Name", "Current", "Previous", "Evolution", "% Evolution"});
-            expectedData.AddRange(new List<string> { "LoC", "62,427", "54,168", "+8,259", "+15.3 %" });
+            expectedData.AddRange(new List<string> { "LoC", "62,427", "54,168", "+8,259", "+15.2 %" });
             expectedData.AddRange(new List<string> { "   Files", "476", "375", "+101", "+26.9 %" });
             expectedData.AddRange(new List<string> { "   Classes", "351", "291", "+60", "+20.6 %" });
             expectedData.AddRange(new List<string> { "SQL Art.", "553", "550", "+3", "+0.55 %" });

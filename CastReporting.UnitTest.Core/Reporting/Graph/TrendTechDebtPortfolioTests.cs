@@ -127,7 +127,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             expectedData.AddRange(new List<string> { quarters[1], "0", "0", "0" });
             expectedData.AddRange(new List<string> { quarters[2], "0", "0", "0" });
             expectedData.AddRange(new List<string> { quarters[3], "0", "0", "0" });
-            expectedData.AddRange(new List<string> { quarters[4], "-26620.88", "61365.38", "2928818.25" });
+            expectedData.AddRange(new List<string> { quarters[4], "-26620.88", "61365.380000000005", "2928818.25" });
             expectedData.AddRange(new List<string> { quarters[5], "0", "0", "0" });
 
             TestUtility.AssertTableContent(table, expectedData, 4, 7);
@@ -234,7 +234,7 @@ namespace CastReporting.UnitTest.Reporting.Graph
             expectedData.AddRange(new List<string> { quarters[1], "-3472.12", "37520.25", "192010.88" });
             expectedData.AddRange(new List<string> { quarters[2], "-4500.75", "16365.75", "2194141.5" });
             expectedData.AddRange(new List<string> { quarters[3], "-16770.38", "427115.62", "603892.12" });
-            expectedData.AddRange(new List<string> { quarters[4], "-34108.12", "139408.51", "2904382.88" });
+            expectedData.AddRange(new List<string> { quarters[4], "-34108.119999999995", "139408.51", "2904382.88" });
             expectedData.AddRange(new List<string> { quarters[5], "-18742.88", "44787", "2316801.75" });
 
             TestUtility.AssertTableContent(table, expectedData, 4, 7);

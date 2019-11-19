@@ -111,7 +111,6 @@ echo ==============================================
 echo Compiling main and tests ...
 echo ==============================================
 
-call "%ProgramFiles(x86)%\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86
 @echo %LOGDEBUG%
 if errorlevel 1 goto endclean
 call dotnet build -c Release
