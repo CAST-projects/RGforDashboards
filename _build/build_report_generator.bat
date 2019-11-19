@@ -65,7 +65,7 @@ set PATH=%PATH%;C:\CAST-Caches\Win64
 set INNODIR=%WORKSPACE%\InnoSetup5
 
 set VERSION=1.12.1
-set ID=com.castsoftware.aip.reportgeneratorfordashboard
+set ID=com.castsoftware.aip.reportgenerator
 
 for /f "delims=. tokens=1,2" %%a in ('echo %VERSION%') do set SHORT_VERSION=%%a.%%b
 echo.
@@ -83,12 +83,13 @@ if not exist %SRCDIR% (
 	echo ERROR: cannot find folder %SRCDIR%
 	goto endclean
 )
-set WORK=%WORKSPACE%\work
 
 echo.
 echo ====================================
 echo Get externals tools
 echo ====================================
+robocopy /mir /nc /nfl /ndl %ENGTOOLS%\external_tools\InnoSetup5_Unicode\5.6.1 %INNODIR%
+if errorlevel 8 exit /b 1
 
 echo.
 echo ==============================================
@@ -97,19 +98,12 @@ echo ==============================================
 if exist %RESDIR% (
     echo Cleaning %RESDIR%
     rmdir /q /s %RESDIR%
-    sleep 3
 )
 mkdir %RESDIR%
 if errorlevel 1 goto endclean
 pushd %RESDIR%
 for /f "delims=/" %%a in ('cd') do set RESDIR=%%a
 popd
-if exist %WORK% (
-    echo Cleaning %WORK%
-    rmdir /q /s %WORK%
-    sleep 3
-)
-mkdir %WORK%
 
 cd %SRCDIR%
 echo.
@@ -136,47 +130,43 @@ if errorlevel 1 (
 
 echo.
 echo ==============================================
-echo Preparing package ...
+echo Building setup ...
 echo ==============================================
-pushd %WORKSPACE%
-set REPORTINGDIR=%SRCDIR%/CastReporting.Reporting.Core
-set CONSOLEDIR=%SRCDIR%/CastReporting.Console.Core/bin/Release/netcoreapp2.2
+set SETUPCONFIG=%WORKSPACE%\%SRCDIR%\Setup\setup.iss
+set SETUPPATH=%WORKSPACE%\%SRCDIR%\Setup\ReportGeneratorSetup.exe
+sed.exe 's/_THE_VERSION_/%VERSION%/' %SETUPCONFIG% >%SETUPCONFIG%_tmp
+if errorlevel 1 goto endclean
+%INNODIR%\ISCC.exe /V3 %SETUPCONFIG%_tmp
+if errorlevel 1 (
+	echo.
+	echo ERROR: InnoSetup generation failed
+	goto endclean
+)
 
-robocopy /njh /s %CONSOLEDIR% %WORK% *.dll
-if errorlevel 8 exit /b 1
-robocopy /njh %CONSOLEDIR% %WORK% *.config CastReporting.Console.Core.runtimeconfig.json CastReporting.Console.Core.deps.json
-if errorlevel 8 exit /b 1
-robocopy /njh %CONSOLEDIR%\Parameters %WORK%\Parameters Parameters.xml
-if errorlevel 8 exit /b 1
-
-::create the log folder
-mkdir %WORK%\Logs
-if errorlevel 1 exit /b 1
-
-::put the templates in the right places
-robocopy /njh /mir %REPORTINGDIR%\Templates %WORK%\Templates
-if errorlevel 8 exit /b 1
-
-::copy the settings file
-robocopy /njh %SRCDIR%\CastReporting.Repositories.Core %WORK% CastReportingSetting.xml
-if errorlevel 8 exit /b 1
-robocopy %SRCDIR%\_build %WORK% License.rtf
-if errorlevel 8 exit /b 1
-
-set ZIPPATH=%RESDIR%\%ID%.%VERSION%.zip
-pushd %WORK%
-7z.exe a -y -r %ZIPPATH% .
+echo.
+echo ==============================================
+echo sign executable
+echo ==============================================
+call %SIGNDIR%\signtool.bat  %SETUPPATH% SHA256
 if errorlevel 1 goto endclean
 
 echo.
-echo Package path is: %ZIPPATH%
+echo ==============================================
+echo copying component
+echo ==============================================
+set COMPONENTPATH=%RESDIR%\%ID%.%VERSION%.exe
+copy /y %SETUPPATH% %COMPONENTPATH%
+if errorlevel 1 goto endclean
+
+echo.
+echo Package path is: %COMPONENTPATH%
 
 pushd %WORKSPACE%
 echo.
 echo ==============================================
 echo Nuget packaging ...
 echo ==============================================
-xcopy /f /y %SRCDIR%\_build\plugin_for_dashboard.nuspec %RESDIR%\plugin.nuspec
+xcopy /f /y %SRCDIR%\_build\plugin.nuspec %RESDIR%
 if errorlevel 1 goto endclean
 
 sed -i 's/_THE_VERSION_/%VERSION%/' %RESDIR%/plugin.nuspec
