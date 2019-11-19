@@ -140,7 +140,7 @@ echo Preparing package ...
 echo ==============================================
 pushd %WORKSPACE%
 set REPORTINGDIR=%SRCDIR%/CastReporting.Reporting.Core
-set CONSOLEDIR=%SRCDIR%/CastReporting.Console.Core/bin/Release/netcoreapp2.2
+set CONSOLEDIR=%SRCDIR%/CastReporting.Console.Core/bin/Release/netcoreapp3.0
 
 robocopy /njh /s %CONSOLEDIR% %WORK% *.dll
 if errorlevel 8 exit /b 1
