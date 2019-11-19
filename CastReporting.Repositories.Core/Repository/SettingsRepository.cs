@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using CastReporting.Domain;
 using CastReporting.Repositories.Core;
 using CastReporting.Repositories.Interfaces;
@@ -88,17 +89,21 @@ namespace CastReporting.Repositories
         /// <returns></returns>
         public string GetApplicationPath()
         {
-            /*
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                string path = GetWinApplicationPath();
+                if (path != null && Directory.Exists(path)) return path;
+            }
+            Assembly _entryAssembly = Assembly.GetEntryAssembly();
+            return Path.GetDirectoryName(_entryAssembly?.Location);
+        }
+
+        public string GetWinApplicationPath()
+        {
             Version vers = Assembly.GetExecutingAssembly().GetName().Version;
             string version = vers.Major.ToString() + '.' + vers.Minor.ToString() + '.' + vers.Build.ToString();
             string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), Settings.Default.CompanyName, Settings.Default.ProductName, version);
-            // Create Folder if not exists
-            if (!string.IsNullOrEmpty(path) && !Directory.Exists(path))
-                Directory.CreateDirectory(path);
             return path;
-            */
-            Assembly _entryAssembly = Assembly.GetEntryAssembly();
-            return Path.GetDirectoryName(_entryAssembly?.Location);
         }
 
 

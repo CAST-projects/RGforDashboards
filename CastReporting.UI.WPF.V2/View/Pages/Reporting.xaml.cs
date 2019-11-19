@@ -67,6 +67,7 @@ namespace CastReporting.UI.WPF.Core.View
         {
             treeView.Items.Clear();
             var rootDirectoryInfo = new DirectoryInfo(path);
+            if (!rootDirectoryInfo.Exists) return;
             foreach (var directory in rootDirectoryInfo.GetDirectories())
                 treeView.Items.Add(CreateDirectoryNode(directory));
             foreach (var file in rootDirectoryInfo.GetFiles())
