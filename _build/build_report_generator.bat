@@ -89,7 +89,7 @@ echo.
 echo ====================================
 echo Get externals tools
 echo ====================================
-robocopy /mir /nc /nfl /ndl %ENGTOOLS%\external_tools\InnoSetup5_Unicode\5.6.1 %INNODIR%
+robocopy /mir /nc /nfl /ndl %ENGTOOLS%\external_tools\InnoSetup\6.0.3 %INNODIR%
 if errorlevel 8 exit /b 1
 
 echo.
@@ -207,7 +207,7 @@ if errorlevel 8 exit /b 1
 robocopy %SRCDIR%\_build %WORK% License.rtf
 if errorlevel 8 exit /b 1
 
-set ZIPPATH=%RESDIRRGFD%\%ID%.%VERSION%.zip
+set ZIPPATH=%RESDIRRGFD%\%ID2%.%VERSION%.zip
 pushd %WORK%
 7z.exe a -y -r %ZIPPATH% .
 if errorlevel 1 goto endclean
@@ -227,7 +227,7 @@ sed -i 's/_THE_VERSION_/%VERSION%/' %RESDIRRGFD%/plugin.nuspec
 if errorlevel 1 goto endclean
 sed -i 's/_THE_SHORT_VERSION_/%SHORT_VERSION%/' %RESDIRRGFD%/plugin.nuspec
 if errorlevel 1 goto endclean
-sed -i 's/_THE_ID_/%ID%/' %RESDIRRGFD%/plugin.nuspec
+sed -i 's/_THE_ID_/%ID2%/' %RESDIRRGFD%/plugin.nuspec
 if errorlevel 1 goto endclean
 
 cd %WORKSPACE%
