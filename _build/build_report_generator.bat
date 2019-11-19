@@ -62,7 +62,7 @@ set FILESRV=\\productfs01
 if not defined ENGTOOLS set ENGTOOLS=%FILESRV%\EngTools
 set SIGNDIR=%ENGTOOLS%\certificates
 set PATH=%PATH%;C:\CAST-Caches\Win64
-set INNODIR=%WORKSPACE%\InnoSetup5
+set INNODIR=%WORKSPACE%\InnoSetup
 
 set VERSION=1.12.1
 set ID=com.castsoftware.aip.reportgenerator
