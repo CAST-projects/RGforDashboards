@@ -120,6 +120,13 @@ pushd %RESDIRRGFD%
 for /f "delims=/" %%a in ('cd') do set RESDIRRGFD=%%a
 popd
 
+set WORK=%WORKSPACE%\work
+if exist %WORK% (
+    echo Cleaning %WORK%
+    rmdir /q /s %WORK%
+    sleep 3
+)
+mkdir %WORK%
 
 cd %SRCDIR%
 echo.
