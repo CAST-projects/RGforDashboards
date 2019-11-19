@@ -175,7 +175,7 @@ echo.
 echo ==============================================
 echo Nuget packaging ...
 echo ==============================================
-copy /f /y %SRCDIR%\_build\plugin_for_dashboard.nuspec %RESDIR%\plugin.nuspec
+xcopy /i /f /y %SRCDIR%\_build\plugin_for_dashboard.nuspec %RESDIR%\plugin.nuspec
 if errorlevel 1 goto endclean
 
 sed -i 's/_THE_VERSION_/%VERSION%/' %RESDIR%/plugin.nuspec
